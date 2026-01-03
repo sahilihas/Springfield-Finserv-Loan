@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apply for Loan | Springfield Financial Services</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-container">
+            <div class="logo">
+                <div class="logo-icon w-12 h-12 rounded-lg flex items-center justify-center" style="background-color: #003366;">
+                    <svg viewBox="0 0 100 100" class="w-8 h-8 text-white" fill="none" stroke="currentColor" stroke-width="6" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M20 45 L50 20 L80 45 V80 H20 Z" />
+                        <path d="M35 80 V60 H45 V80" fill="white" stroke="none" />
+                        <path d="M55 80 V50 H65 V80" fill="white" stroke="none" />
+                    </svg>
+                </div>
+                <span class="logo-text">Springfield Financial</span>
+            </div>
+            <nav class="nav-menu">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="about.html" class="nav-link">About</a>
+                <a href="products.html" class="nav-link">Loan Products</a>
+                <a href="contact.html" class="nav-link">Contact</a>
+                <a href="apply.html" class="nav-link nav-link-bold active">Apply Now</a>
+                <a href="admin.html" class="btn-login">Admin</a>
+                <button id="darkModeToggle" class="dark-mode-toggle" aria-label="Toggle dark mode">
+                    <svg class="sun-icon" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z"/>
+                    </svg>
+                    <svg class="moon-icon" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"/>
+                    </svg>
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Application Form -->
+    <section class="apply-section">
+        <div class="container-medium">
+            <div class="application-card">
+                <div class="application-header">
+                    <h2 class="application-title">Loan Application Portal</h2>
+                    <p class="application-subtitle">Complete application in a few simple steps</p>
+                </div>
+                
+                <form id="loanApplicationForm" class="application-form">
+                    <!-- Honeypot -->
+                    <div style="display:none;">
+                        <input type="text" id="website" name="website" tabindex="-1">
+                    </div>
+
+                    <!-- Progress Indicator -->
+                    <div class="progress-indicator">
+                        <div class="progress-step active" data-step="1">
+                            <div class="progress-circle">1</div>
+                            <span class="progress-label">Personal</span>
+                        </div>
+                        <div class="progress-line"></div>
+                        <div class="progress-step" data-step="2">
+                            <div class="progress-circle">2</div>
+                            <span class="progress-label">Business</span>
+                        </div>
+                        <div class="progress-line"></div>
+                        <div class="progress-step" data-step="3">
+                            <div class="progress-circle">3</div>
+                            <span class="progress-label">Loan Details</span>
+                        </div>
+                        <div class="progress-line"></div>
+                        <div class="progress-step" data-step="4">
+                            <div class="progress-circle">4</div>
+                            <span class="progress-label">Financial</span>
+                        </div>
+                        <div class="progress-line"></div>
+                        <div class="progress-step" data-step="5">
+                            <div class="progress-circle">5</div>
+                            <span class="progress-label">Documents</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Section 1: Applicant Information -->
+                    <div class="form-section" data-section="1">
+                        <h3 class="form-section-title">1. Applicant Information</h3>
+                        <div class="form-row">
+                            <input type="text" name="fullName" placeholder="Full Name *" required class="form-input">
+                            <input type="email" name="email" placeholder="Email Address *" required class="form-input">
+                        </div>
+                        <div class="form-row">
+                            <input type="tel" name="phone" placeholder="Phone Number *" required class="form-input">
+                            <input type="tel" name="whatsapp" placeholder="WhatsApp Number (with country code) *" required class="form-input">
+                        </div>
+                        <div class="form-row">
+                            <input type="date" name="dateOfBirth" placeholder="Date of Birth *" required class="form-input">
+                            <input type="text" name="nationality" placeholder="Nationality *" required class="form-input">
+                        </div>
+                        <input type="text" name="address" placeholder="Residential Address *" required class="form-input full-width">
+                        <div class="form-row">
+                            <select name="idType" class="form-input" required>
+                                <option value="">Select ID Type *</option>
+                                <option value="passport">Passport</option>
+                                <option value="national_id">National ID Card</option>
+                                <option value="drivers_license">Driver's License</option>
+                            </select>
+                            <input type="text" name="idNumber" placeholder="ID Number *" required class="form-input">
+                        </div>
+                        <div class="file-upload-area">
+                            <label class="file-upload-label">Upload Government-issued ID *</label>
+                            <input type="file" name="idDocument" accept=".pdf,.jpg,.jpeg,.png" required class="file-input" id="idDocument">
+                            <label for="idDocument" class="file-label-custom">
+                                <span class="file-icon">📎</span>
+                                <span class="file-text">Choose file or drag here</span>
+                            </label>
+                            <span class="file-name" id="idDocumentName"></span>
+                        </div>
+                    </div>
+
+                    <!-- Section 2: Business Information -->
+                    <div class="form-section hidden" data-section="2">
+                        <h3 class="form-section-title">2. Business Information</h3>
+                        <div class="form-row">
+                            <input type="text" name="businessName" placeholder="Business Name *" required class="form-input">
+                            <input type="text" name="businessRegNumber" placeholder="Business Registration Number *" required class="form-input">
+                        </div>
+                        <div class="form-row">
+                            <select name="businessEntity" class="form-input" required>
+                                <option value="">Type of Business Entity *</option>
+                                <option value="sole_proprietorship">Sole Proprietorship</option>
+                                <option value="partnership">Partnership</option>
+                                <option value="limited_company">Limited Company (Ltd.)</option>
+                                <option value="corporation">Corporation</option>
+                                <option value="other">Other</option>
+                            </select>
+                            <input type="text" name="industry" placeholder="Industry/Sector *" required class="form-input">
+                        </div>
+                        <input type="text" name="businessAddress" placeholder="Business Address *" required class="form-input full-width">
+                        <div class="form-row">
+                            <input type="date" name="businessEstablished" placeholder="Date Business Established *" required class="form-input">
+                            <input type="text" name="tin" placeholder="Tax Identification Number (TIN) *" required class="form-input">
+                        </div>
+                        <input type="url" name="businessWebsite" placeholder="Business Website (optional)" class="form-input full-width">
+                        
+                        <h4 class="subsection-title">Ownership & Management</h4>
+                        <div class="form-row">
+                            <input type="text" name="ownerNames" placeholder="Owner(s)/Directors' Names *" required class="form-input">
+                            <input type="number" name="ownershipPercentage" placeholder="Ownership Percentage *" min="0" max="100" required class="form-input">
+                        </div>
+                        <div class="file-upload-area">
+                            <label class="file-upload-label">Upload Business Registration Documents *</label>
+                            <input type="file" name="businessDocs" accept=".pdf,.jpg,.jpeg,.png" required class="file-input" id="businessDocs" multiple>
+                            <label for="businessDocs" class="file-label-custom">
+                                <span class="file-icon">📎</span>
+                                <span class="file-text">Choose files or drag here (multiple allowed)</span>
+                            </label>
+                            <span class="file-name" id="businessDocsName"></span>
+                        </div>
+                    </div>
+
+                    <!-- Section 3: Loan Request Details -->
+                    <div class="form-section hidden" data-section="3">
+                        <h3 class="form-section-title">3. Loan Request Details</h3>
+                        <div class="form-row">
+                            <input type="number" name="loanAmount" placeholder="Loan Amount (USD) *" min="10000" max="500000" required class="form-input">
+                            <select name="loanPurpose" class="form-input" required multiple size="1">
+                                <option value="">Purpose of Loan *</option>
+                                <option value="working_capital">Working Capital</option>
+                                <option value="equipment">Equipment Purchase</option>
+                                <option value="inventory">Inventory</option>
+                                <option value="expansion">Business Expansion</option>
+                                <option value="real_estate">Real Estate</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                        <div class="form-row">
+                            <select name="repaymentTerm" class="form-input" required>
+                                <option value="">Preferred Repayment Term *</option>
+                                <option value="6">6 Months</option>
+                                <option value="12">12 Months</option>
+                                <option value="18">18 Months</option>
+                                <option value="24">24 Months</option>
+                                <option value="36">36 Months</option>
+                            </select>
+                            <input type="date" name="proposedStartDate" placeholder="Proposed Start Date *" required class="form-input">
+                        </div>
+                    </div>
+
+                    <!-- Section 4: Business Financial Details -->
+                    <div class="form-section hidden" data-section="4">
+                        <h3 class="form-section-title">4. Business Financial Details</h3>
+                        <div class="form-row">
+                            <input type="number" name="annualRevenue" placeholder="Annual Revenue (Last Fiscal Year, USD) *" min="0" required class="form-input">
+                            <input type="number" name="monthlySales" placeholder="Monthly Average Sales (USD) *" min="0" required class="form-input">
+                        </div>
+                        <div class="form-row">
+                            <input type="number" name="monthlyExpenses" placeholder="Monthly Expenses (USD) *" min="0" required class="form-input">
+                            <select name="existingLoans" class="form-input" required id="existingLoans">
+                                <option value="">Existing Loans/Liabilities? *</option>
+                                <option value="no">No</option>
+                                <option value="yes">Yes</option>
+                            </select>
+                        </div>
+                        
+                        <!-- Existing Loan Details (conditional) -->
+                        <div id="existingLoanDetails" class="hidden conditional-section">
+                            <h4 class="subsection-title">Existing Loan Information</h4>
+                            <div class="form-row">
+                                <input type="text" name="lenderName" placeholder="Lender Name" class="form-input">
+                                <input type="number" name="outstandingBalance" placeholder="Outstanding Balance (USD)" min="0" class="form-input">
+                            </div>
+                            <input type="number" name="monthlyRepayment" placeholder="Monthly Repayment (USD)" min="0" class="form-input full-width">
+                        </div>
+
+                        <div class="file-upload-area">
+                            <label class="file-upload-label">Upload Bank Statements (Last 6 months) *</label>
+                            <input type="file" name="bankStatements" accept=".pdf" required class="file-input" id="bankStatements" multiple>
+                            <label for="bankStatements" class="file-label-custom">
+                                <span class="file-icon">📎</span>
+                                <span class="file-text">Choose PDF files (multiple allowed)</span>
+                            </label>
+                            <span class="file-name" id="bankStatementsName"></span>
+                        </div>
+                    </div>
+
+                    <!-- Section 5: Declaration & Consent -->
+                    <div class="form-section hidden" data-section="5">
+                        <h3 class="form-section-title">5. Declaration & Consent</h3>
+                        
+                        <div class="file-upload-area">
+                            <label class="file-upload-label">Upload Owner(s) IDs (if required)</label>
+                            <input type="file" name="ownerIds" accept=".pdf,.jpg,.jpeg,.png" class="file-input" id="ownerIds" multiple>
+                            <label for="ownerIds" class="file-label-custom">
+                                <span class="file-icon">📎</span>
+                                <span class="file-text">Choose files (optional)</span>
+                            </label>
+                            <span class="file-name" id="ownerIdsName"></span>
+                        </div>
+
+                        <div class="consent-section">
+                            <label class="checkbox-container">
+                                <input type="checkbox" name="certifyInfo" required>
+                                <span class="checkmark"></span>
+                                <span class="checkbox-text">I certify that the information provided is true and complete. *</span>
+                            </label>
+
+                            <label class="checkbox-container">
+                                <input type="checkbox" name="authorizeVerification" required>
+                                <span class="checkmark"></span>
+                                <span class="checkbox-text">I authorize Springfield Financial Services Ltd to verify my credit and business history. *</span>
+                            </label>
+
+                            <label class="checkbox-container">
+                                <input type="checkbox" name="agreeTerms" required>
+                                <span class="checkmark"></span>
+                                <span class="checkbox-text">I agree to the Terms and Conditions and Privacy Policy. *</span>
+                            </label>
+                        </div>
+
+                        <div class="signature-section">
+                            <label class="form-label">Digital Signature *</label>
+                            <input type="text" name="digitalSignature" placeholder="Type your full name as signature" required class="form-input signature-input">
+                            <p class="form-help-text">By typing your name, you are providing a legal digital signature</p>
+                        </div>
+
+                        <div class="form-row">
+                            <select name="preferredContact" class="form-input">
+                                <option value="">Preferred Contact Method</option>
+                                <option value="phone">Phone</option>
+                                <option value="email">Email</option>
+                                <option value="whatsapp">WhatsApp</option>
+                            </select>
+                            <input type="text" name="submissionDate" class="form-input" readonly id="submissionDate">
+                        </div>
+                    </div>
+
+                    <!-- Navigation Buttons -->
+                    <div class="form-navigation">
+                        <button type="button" class="btn btn-secondary" id="prevBtn" style="display: none;">← Previous</button>
+                        <button type="button" class="btn btn-primary" id="nextBtn">Next →</button>
+                        <button type="submit" class="btn btn-navy btn-submit" id="submitBtn" style="display: none;">Submit Application</button>
+                    </div>
+                </form>
+
+                <!-- Confirmation Message -->
+                <div id="confirmation" class="confirmation hidden">
+                    <div class="confirmation-icon">✓</div>
+                    <h2 class="confirmation-title">Application Submitted Successfully!</h2>
+                    <p class="confirmation-text">Thank you for applying. Our team will review your application and contact you within 1-5 business days.</p>
+                    <p class="confirmation-id">Application ID: <strong id="applicationId"></strong></p>
+                    <a href="index.html" class="btn btn-navy">Return Home</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-links">
+                <a href="index.html">Home</a>
+                <a href="about.html">About</a>
+                <a href="products.html">Products</a>
+                <a href="apply.html">Apply for Loan</a>
+                <a href="#">Privacy Policy</a>
+            </div>
+            <p class="footer-copyright">© 2025 Springfield Financial Services Ltd. Ripon HG4 4DX, UK. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script src="apply.js"></script>
+</body>
+</html>

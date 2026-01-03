@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us | Springfield Financial Services</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-container">
+            <div class="logo">
+                <div class="logo-icon w-12 h-12 rounded-lg flex items-center justify-center" style="background-color: #003366;">
+                    <svg viewBox="0 0 100 100" class="w-8 h-8 text-white" fill="none" stroke="currentColor" stroke-width="6" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M20 45 L50 20 L80 45 V80 H20 Z" />
+                        <path d="M35 80 V60 H45 V80" fill="white" stroke="none" />
+                        <path d="M55 80 V50 H65 V80" fill="white" stroke="none" />
+                    </svg>
+                </div>
+                <span class="logo-text">Springfield Financial</span>
+            </div>
+            <nav class="nav-menu">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="about.html" class="nav-link">About</a>
+                <a href="products.html" class="nav-link">Loan Products</a>
+                <a href="contact.html" class="nav-link active">Contact</a>
+                <a href="apply.html" class="nav-link nav-link-bold">Apply Now</a>
+                <a href="admin.html" class="btn-login">Admin</a>
+                <button id="darkModeToggle" class="dark-mode-toggle" aria-label="Toggle dark mode">
+                    <svg class="sun-icon" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z"/>
+                    </svg>
+                    <svg class="moon-icon" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"/>
+                    </svg>
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container">
+            <h1 class="page-title">Get in Touch</h1>
+            <p class="page-subtitle">Our expert team is ready to help you achieve your business goals</p>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact-section">
+        <div class="container">
+            <div class="contact-grid">
+                <div class="contact-info">
+                    <h2 class="section-title">Contact Information</h2>
+                    <div class="title-divider"></div>
+                    <p class="contact-text">Whether you're in Lagos, Bogotá, or Ho Chi Minh City, our expert team is just an email or phone call away.</p>
+                    
+                    <div class="contact-details">
+                        <div class="contact-item">
+                            <div class="contact-icon">📍</div>
+                            <div>
+                                <p class="contact-label">Head Office</p>
+                                <p class="contact-value">7 Silver Street, Ripon, HG4 4DX, UK</p>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <div class="contact-icon">📧</div>
+                            <div>
+                                <p class="contact-label">Email</p>
+                                <p class="contact-value">info@springfieldfinserv.com</p>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <div class="contact-icon">📞</div>
+                            <div>
+                                <p class="contact-label">Phone</p>
+                                <p class="contact-value">+44 7400 428 244</p>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <div class="contact-icon">🕐</div>
+                            <div>
+                                <p class="contact-label">Business Hours</p>
+                                <p class="contact-value">Mon - Fri: 9:00 AM - 6:00 PM GMT</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <form id="contact-form" class="contact-form">
+                    <h3 class="form-title">Send us a Message</h3>
+                    <input type="text" name="name" placeholder="Full Name" required class="form-input">
+                    <input type="text" name="company" placeholder="Company" required class="form-input">
+                    <input type="email" name="email" placeholder="Email Address" required class="form-input">
+                    <input type="tel" name="phone" placeholder="Phone Number" class="form-input">
+                    <textarea name="message" placeholder="Your Message" required class="form-textarea"></textarea>
+                    <button type="submit" class="btn btn-navy btn-large">Send Message ►</button>
+                    <p id="form-success" class="form-success hidden">✓ Thank you! We'll get back to you soon.</p>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Map Section -->
+    <section class="map-section">
+        <div class="container">
+            <h2 class="section-title text-center">Our Location</h2>
+            <div class="title-divider mx-auto"></div>
+            <div class="map-placeholder">
+                <p>🗺️ 7 Silver Street, Ripon, HG4 4DX, United Kingdom</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-links">
+                <a href="index.html">Home</a>
+                <a href="about.html">About</a>
+                <a href="products.html">Products</a>
+                <a href="apply.html">Apply for Loan</a>
+                <a href="#">Privacy Policy</a>
+            </div>
+            <p class="footer-copyright">© 2025 Springfield Financial Services Ltd. Ripon HG4 4DX, UK. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

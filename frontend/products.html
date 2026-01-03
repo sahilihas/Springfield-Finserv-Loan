@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loan Products | Springfield Financial Services</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-container">
+            <div class="logo">
+                <div class="logo-icon w-12 h-12 rounded-lg flex items-center justify-center" style="background-color: #003366;">
+                    <svg viewBox="0 0 100 100" class="w-8 h-8 text-white" fill="none" stroke="currentColor" stroke-width="6" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M20 45 L50 20 L80 45 V80 H20 Z" />
+                        <path d="M35 80 V60 H45 V80" fill="white" stroke="none" />
+                        <path d="M55 80 V50 H65 V80" fill="white" stroke="none" />
+                    </svg>
+                </div>
+                <span class="logo-text">Springfield Financial</span>
+            </div>
+            <nav class="nav-menu">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="about.html" class="nav-link">About</a>
+                <a href="products.html" class="nav-link active">Loan Products</a>
+                <a href="contact.html" class="nav-link">Contact</a>
+                <a href="apply.html" class="nav-link nav-link-bold">Apply Now</a>
+                <a href="admin.html" class="btn-login">Admin</a>
+                <button id="darkModeToggle" class="dark-mode-toggle" aria-label="Toggle dark mode">
+                    <svg class="sun-icon" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z"/>
+                    </svg>
+                    <svg class="moon-icon" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"/>
+                    </svg>
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container">
+            <h1 class="page-title">Our Loan Products</h1>
+            <p class="page-subtitle">Flexible financing solutions tailored to your business needs</p>
+        </div>
+    </section>
+
+    <!-- Products Section -->
+    <section class="products-section">
+        <div class="container">
+            <div class="products-grid">
+                <div class="product-card">
+                    <div class="product-icon">💼</div>
+                    <h3 class="product-name">Working Capital</h3>
+                    <p class="product-amount">$10k – $250k</p>
+                    <p class="product-description">6–18 months. Flexible repayment schedule matching cash-flow.</p>
+                    <ul class="product-features">
+                        <li>✓ No collateral required</li>
+                        <li>✓ Fast approval in 1-5 days</li>
+                        <li>✓ Competitive 12% p.a. rate</li>
+                        <li>✓ Flexible repayment terms</li>
+                    </ul>
+                    <a href="apply.html" class="btn btn-primary">Apply Now</a>
+                </div>
+
+                <div class="product-card">
+                    <div class="product-icon">🏭</div>
+                    <h3 class="product-name">Equipment Finance</h3>
+                    <p class="product-amount">$25k – $500k</p>
+                    <p class="product-description">12–36 months. Competitive interest, up to 100% financing.</p>
+                    <ul class="product-features">
+                        <li>✓ Up to 100% financing</li>
+                        <li>✓ Low interest rates</li>
+                        <li>✓ Quick processing</li>
+                        <li>✓ Equipment as security</li>
+                    </ul>
+                    <a href="apply.html" class="btn btn-primary">Apply Now</a>
+                </div>
+
+                <div class="product-card">
+                    <div class="product-icon">📈</div>
+                    <h3 class="product-name">Expansion Capital</h3>
+                    <p class="product-amount">$50k – $300k</p>
+                    <p class="product-description">12–24 months. Market-entry & growth funding for new locations.</p>
+                    <ul class="product-features">
+                        <li>✓ Business growth support</li>
+                        <li>✓ New location funding</li>
+                        <li>✓ Market entry assistance</li>
+                        <li>✓ Scalable solutions</li>
+                    </ul>
+                    <a href="apply.html" class="btn btn-primary">Apply Now</a>
+                </div>
+
+                <div class="product-card">
+                    <div class="product-icon">📄</div>
+                    <h3 class="product-name">Invoice Financing</h3>
+                    <p class="product-amount">Up to 80% of AR</p>
+                    <p class="product-description">30–120 days. Fast liquidity against your outstanding invoices.</p>
+                    <ul class="product-features">
+                        <li>✓ Immediate cash flow</li>
+                        <li>✓ Up to 80% advance</li>
+                        <li>✓ No long-term commitment</li>
+                        <li>✓ Simple application</li>
+                    </ul>
+                    <a href="apply.html" class="btn btn-primary">Apply Now</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Loan Calculator -->
+    <section class="calculator-section">
+        <div class="container">
+            <h2 class="section-title text-center">Loan Calculator</h2>
+            <div class="title-divider mx-auto"></div>
+            <p class="calculator-subtitle">Estimate your monthly payments</p>
+
+            <div class="calculator-card">
+                <div class="calculator-grid">
+                    <div class="calculator-input">
+                        <label for="loan-amount" class="calculator-label">Loan Amount</label>
+                        <input type="range" id="loan-amount" min="10000" max="500000" step="10000" value="100000" class="range-slider">
+                        <p id="amount-label" class="calculator-value">$100,000</p>
+                    </div>
+
+                    <div class="calculator-input">
+                        <label for="loan-term" class="calculator-label">Loan Term</label>
+                        <input type="range" id="loan-term" min="6" max="36" step="6" value="12" class="range-slider">
+                        <p id="term-label" class="calculator-value">12 Months</p>
+                    </div>
+                </div>
+
+                <div class="calculator-result">
+                    <p class="result-label">Estimated Monthly Payment</p>
+                    <p id="monthly-payment" class="result-amount">$8,884.88</p>
+                    <p class="result-note">*Based on 12% APR. Final rate may vary based on credit assessment.</p>
+                </div>
+
+                <a href="apply.html" class="btn btn-primary btn-large">Apply for This Loan</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-links">
+                <a href="index.html">Home</a>
+                <a href="about.html">About</a>
+                <a href="products.html">Products</a>
+                <a href="apply.html">Apply for Loan</a>
+                <a href="#">Privacy Policy</a>
+            </div>
+            <p class="footer-copyright">© 2025 Springfield Financial Services Ltd. Ripon HG4 4DX, UK. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
