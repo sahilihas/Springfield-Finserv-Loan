@@ -1,6 +1,4 @@
-// ===================================
 // MULTI-STEP FORM LOGIC WITH BACKEND
-// ===================================
 document.addEventListener('DOMContentLoaded', () => {
     let currentStep = 1;
     const totalSteps = 5;
@@ -10,29 +8,23 @@ document.addEventListener('DOMContentLoaded', () => {
     const nextBtn = document.getElementById('nextBtn');
     const submitBtn = document.getElementById('submitBtn');
     const confirmationDiv = document.getElementById('confirmation');
-
     // Initialize submission date
     const submissionDateField = document.getElementById('submissionDate');
     if (submissionDateField) {
         const today = new Date().toLocaleDateString('en-GB');
         submissionDateField.value = `Submission Date: ${today}`;
     }
-
-    // ===================================
     // STEP NAVIGATION
-    // ===================================
     function showStep(step) {
         // Hide all sections
         document.querySelectorAll('.form-section').forEach(section => {
             section.classList.add('hidden');
         });
-
         // Show current section
         const currentSection = document.querySelector(`[data-section="${step}"]`);
         if (currentSection) {
             currentSection.classList.remove('hidden');
         }
-
         // Update progress indicator
         document.querySelectorAll('.progress-step').forEach((progressStep, index) => {
             if (index < step) {
@@ -56,9 +48,7 @@ document.addEventListener('DOMContentLoaded', () => {
         window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
-    // ===================================
     // VALIDATE CURRENT STEP
-    // ===================================
     function validateStep(step) {
         const currentSection = document.querySelector(`[data-section="${step}"]`);
         if (!currentSection) return true;
@@ -88,9 +78,7 @@ document.addEventListener('DOMContentLoaded', () => {
         return isValid;
     }
 
-    // ===================================
     // BUTTON EVENT LISTENERS
-    // ===================================
     if (nextBtn) {
         nextBtn.addEventListener('click', () => {
             if (validateStep(currentStep)) {
@@ -107,9 +95,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // ===================================
     // FILE UPLOAD HANDLERS WITH PREVIEW
-    // ===================================
     const fileInputs = [
         { input: 'idDocument', display: 'idDocumentName', preview: 'idDocumentPreview' },
         { input: 'businessDocs', display: 'businessDocsName', preview: 'businessDocsPreview' },
@@ -269,7 +255,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
         
-        // ESC key to close
+        // ESC function key to close
         const escHandler = (e) => {
             if (e.key === 'Escape') {
                 modal.remove();
@@ -282,11 +268,9 @@ document.addEventListener('DOMContentLoaded', () => {
         return modal;
     }
 
-    // Remove file from storage
+    // Remove file from storage and update display
     function removeFile(inputId, index, container) {
         fileStorage[inputId].splice(index, 1);
-        
-        // Update display
         const fileDisplay = document.getElementById(inputId + 'Name');
         if (fileStorage[inputId].length > 0) {
             const fileNames = fileStorage[inputId].map(f => f.name).join(', ');
@@ -295,9 +279,8 @@ document.addEventListener('DOMContentLoaded', () => {
             fileDisplay.textContent = '';
         }
         
-        // Refresh preview
+        // Refresh preview container 
         displayFilePreviews(fileStorage[inputId], container, inputId);
-        
         // Update the actual file input (create new FileList)
         const fileInput = document.getElementById(inputId);
         const dataTransfer = new DataTransfer();
@@ -305,9 +288,7 @@ document.addEventListener('DOMContentLoaded', () => {
         fileInput.files = dataTransfer.files;
     }
 
-    // ===================================
     // CONDITIONAL FIELDS
-    // ===================================
     const existingLoansSelect = document.getElementById('existingLoans');
     const existingLoanDetails = document.getElementById('existingLoanDetails');
 
@@ -328,24 +309,20 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // ===================================
     // FORM SUBMISSION WITH BACKEND API
-    // ===================================
     if (form) {
         form.addEventListener('submit', async (e) => {
             e.preventDefault();
 
-            // Check honeypot
+            // Check honeypot and validate current step
             const honeypot = document.getElementById('website');
             if (honeypot && honeypot.value) {
-                return; // Bot detected
+                return; // Bot detected here
             }
-
-            // Validate final step
+            // Validate final step and all required fields
             if (!validateStep(currentStep)) {
                 return;
             }
-
             // Show loading state
             submitBtn.disabled = true;
             submitBtn.textContent = 'Submitting...';
@@ -353,8 +330,24 @@ document.addEventListener('DOMContentLoaded', () => {
             try {
                 // Create FormData object for file upload
                 const formData = new FormData(form);
+                
+                //saves files from local storage to formData
+                const applicationData = Object.fromEntries(formData.entries());
+                applicationData.id = 'APP-' + Date.now();
+                applicationData.status = 'Pending Review';
+                applicationData.submittedAt = new Date().toISOString();
 
-                // Submit to backend API
+                const existingApps = JSON.parse(localStorage.getItem('loanApplications')) || [];
+                existingApps.push(applicationData);
+                localStorage.setItem('loanApplications', JSON.stringify(existingApps));
+
+                form.classList.add('hidden');
+                confirmationDiv.classList.remove('hidden');
+                
+                document.getElementById('applicationId').textContent = applicationData.id;
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+
+                /* Submit to backend API
                 const response = await api.submitApplication(formData);
 
                 if (response.success) {
@@ -371,7 +364,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     window.scrollTo({ top: 0, behavior: 'smooth' });
                 } else {
                     throw new Error(response.message || 'Submission failed');
-                }
+                }*/
 
             } catch (error) {
                 console.error('Error submitting application:', error);
@@ -382,10 +375,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // ===================================
     // INPUT VALIDATION HELPERS
-    // ===================================
-    
     // Email validation
     const emailInputs = form.querySelectorAll('input[type="email"]');
     emailInputs.forEach(input => {
@@ -428,8 +418,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // ===================================
     // INITIALIZE FORM
-    // ===================================
     showStep(currentStep);
 });

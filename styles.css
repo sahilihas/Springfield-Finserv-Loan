@@ -1,6 +1,4 @@
-/* ===================================
-   CSS VARIABLES & RESET
-   =================================== */
+/* CSS VARIABLES & RESET */
 :root {
     --navy: #003366;
     --navy-dark: #002244;
@@ -63,9 +61,7 @@ a {
     color: inherit;
 }
 
-/* ===================================
-   HEADER & NAVIGATION
-   =================================== */
+/* HEADER & NAVIGATION */
 .header {
     background-color: #002244;
     color: white;
@@ -199,9 +195,7 @@ a {
     display: block;
 }
 
-/* ===================================
-   MOBILE NAVIGATION (HAMBURGER MENU)
-   =================================== */
+/* MOBILE NAVIGATION (HAMBURGER MENU) */
 .mobile-menu-toggle {
     display: none;
     background: none;
@@ -282,9 +276,7 @@ a {
     }
 }
 
-/* ===================================
-   BUTTONS
-   =================================== */
+/* BUTTONS */
 .btn {
     display: inline-block;
     padding: 0.75rem 2.5rem;
@@ -333,9 +325,7 @@ a {
     font-size: 1.125rem;
 }
 
-/* ===================================
-   HERO SECTION
-   =================================== */
+/* HERO SECTION */
 .hero {
     background: linear-gradient(rgba(0, 51, 102, 0.7), rgba(0, 51, 102, 0.7)), 
                 url('attached_assets/generated_images/diverse_business_professionals_in_meeting.png');
@@ -377,9 +367,7 @@ a {
     flex-wrap: wrap;
 }
 
-/* ===================================
-   FEATURES
-   =================================== */
+/* FEATURES */
 .features-wrapper {
     max-width: 1280px;
     margin: -4rem auto 0;
@@ -422,9 +410,7 @@ a {
     font-size: 0.875rem;
 }
 
-/* ===================================
-   SECTIONS
-   =================================== */
+/* SECTIONS */
 .container {
     max-width: 1280px;
     margin: 0 auto;
@@ -472,12 +458,10 @@ a {
     margin-right: auto;
 }
 
-/* ===================================
-   PAGE HEADER
-   =================================== */
+/* PAGE HEADER*/
 .page-header {
     background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%);
-    padding: 4rem 0;
+    padding: 4rem 1rem;
     text-align: center;
     color: white;
 }
@@ -493,9 +477,7 @@ a {
     opacity: 0.9;
 }
 
-/* ===================================
-   SUCCESS STORIES
-   =================================== */
+/* SUCCESS STORIES */
 .success-stories {
     background-color: var(--navy);
     color: white;
@@ -531,9 +513,7 @@ a {
     opacity: 0.6;
 }
 
-/* ===================================
-   ABOUT PAGE
-   =================================== */
+/* ABOUT PAGE */
 .about-section {
     padding: 6rem 0;
 }
@@ -581,9 +561,7 @@ a {
     font-style: italic;
 }
 
-/* ===================================
-   MANAGEMENT TEAM
-   =================================== */
+/* MANAGEMENT TEAM */
 .management-section {
     padding: 6rem 0;
     background-color: var(--bg-main);
@@ -651,9 +629,7 @@ a {
     justify-content: center;
 }
 
-/* ===================================
-   PRODUCTS PAGE
-   =================================== */
+/* PRODUCTS PAGE */
 .products-section {
     padding: 6rem 0;
 }
@@ -712,9 +688,7 @@ a {
     margin-bottom: 0.5rem;
 }
 
-/* ===================================
-   LOAN CALCULATOR
-   =================================== */
+/* LOAN CALCULATOR */
 .calculator-section {
     padding: 6rem 0;
     background-color: var(--bg-alt);
@@ -817,9 +791,7 @@ a {
     font-style: italic;
 }
 
-/* ===================================
-   CONTACT PAGE
-   =================================== */
+/* CONTACT PAGE */
 .contact-section {
     padding: 6rem 0;
 }
@@ -925,9 +897,7 @@ a {
     display: none !important;
 }
 
-/* ===================================
-   MAP SECTION
-   =================================== */
+/* MAP SECTION */
 .map-section {
     padding: 6rem 0;
     background-color: var(--bg-alt);
@@ -947,9 +917,7 @@ a {
     margin-top: 2rem;
 }
 
-/* ===================================
-   APPLICATION FORM
-   =================================== */
+/*APPLICATION FORM*/
 .apply-section {
     padding: 4rem 0;
     min-height: calc(100vh - 80px);
@@ -965,7 +933,7 @@ a {
 
 .application-header {
     background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%);
-    padding: 3rem 2rem;
+    padding: 2rem 2rem;
     text-align: center;
     color: white;
 }
@@ -985,6 +953,7 @@ a {
 
 .application-form {
     padding: 3rem 2rem;
+    /* background-color: lavender; */
 }
 
 .form-section {
@@ -1056,9 +1025,7 @@ a {
     margin-top: 2rem;
 }
 
-/* ===================================
-   CONFIRMATION
-   =================================== */
+/* CONFIRMATION */
 .confirmation {
     text-align: center;
     padding: 6rem 2rem;
@@ -1089,9 +1056,7 @@ a {
     margin-bottom: 2rem;
 }
 
-/* ===================================
-   FOOTER
-   =================================== */
+/* FOOTER */
 .footer {
     background-color: var(--navy);
     color: white;
@@ -1129,9 +1094,7 @@ a {
     opacity: 0.4;
 }
 
-/* ===================================
-   MULTI-STEP FORM ADDITIONAL STYLES
-   =================================== */
+/* MULTI-STEP FORM ADDITIONAL STYLES */
 .container-medium {
     max-width: 1000px;
     margin: 0 auto;
@@ -1141,7 +1104,7 @@ a {
 .progress-indicator {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
     padding: 2rem 1rem;
     margin-bottom: 2rem;
     background-color: var(--bg-alt);
@@ -1331,9 +1294,7 @@ a {
     border-color: #ef4444;
 }
 
-/* ===================================
-   FILE PREVIEW STYLES
-   =================================== */
+/* FILE PREVIEW STYLES */
 .file-preview-container {
     margin-top: 1rem;
     display: flex;
@@ -1512,9 +1473,7 @@ a {
     margin: 0 auto;
 }
 
-/* ===================================
-   CHECKBOX STYLES
-   =================================== */
+/* CHECKBOX STYLES */
 .checkbox-container {
     display: flex;
     align-items: flex-start;
@@ -1580,9 +1539,7 @@ a {
     font-size: 0.875rem;
 }
 
-/* ===================================
-   FAQ SECTION
-   =================================== */
+/* FAQ SECTION */
 .faq-section {
     padding: 6rem 0;
     background-color: var(--bg-main);
@@ -1653,9 +1610,7 @@ a {
     line-height: 1.8;
 }
 
-/* ===================================
-   WHY SMBS LOVE SPRINGFIELD SECTION
-   =================================== */
+/* WHY SMBS LOVE SPRINGFIELD SECTION */
 .love-section {
     padding: 6rem 0;
     background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%);
@@ -1671,16 +1626,16 @@ a {
 
 .love-card {
     background-color: rgba(255, 255, 255, 0.1);
-    padding: 2rem;
-    border-radius: 12px;
+    padding: 1.2rem;
+    border-radius: 15px;
     border: 1px solid rgba(255, 255, 255, 0.2);
     backdrop-filter: blur(10px);
-    transition: all 0.3s;
+    transition: all 0.35s;
 }
 
 .love-card:hover {
     background-color: rgba(255, 255, 255, 0.15);
-    transform: translateY(-8px);
+    transform: translateY(-10px);
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
 }
 
@@ -1709,9 +1664,7 @@ a {
     display: block;
 }
 
-/* ===================================
-   RESPONSIVE
-   =================================== */
+/* RESPONSIVE */
 @media (max-width: 968px) {
     .mobile-menu-toggle {
         display: block;
