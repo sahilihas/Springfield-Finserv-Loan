@@ -14,22 +14,26 @@
     <header class="header">
         <div class="header-container">
             <div class="logo">
-                <div class="logo-icon w-12 h-12 rounded-lg flex items-center justify-center" style="background-color: #003366;">
-                    <svg viewBox="0 0 100 100" class="w-8 h-8 text-white" fill="none" stroke="currentColor" stroke-width="6" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M20 45 L50 20 L80 45 V80 H20 Z" />
-                        <path d="M35 80 V60 H45 V80" fill="white" stroke="none" />
-                        <path d="M55 80 V50 H65 V80" fill="white" stroke="none" />
+                <div class="logo-icon">
+                    <svg fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M10 2a6 6 0 00-6 6v3.586l-.707.707A1 1 0 004 14h12a1 1 0 00.707-1.707L16 11.586V8a6 6 0 00-6-6zM10 18a3 3 0 01-3-3h6a3 3 0 01-3 3z"/>
                     </svg>
                 </div>
                 <span class="logo-text">Springfield Financial</span>
             </div>
-            <nav class="nav-menu">
+            
+            <!-- Mobile Menu Toggle -->
+            <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Toggle menu">
+                <span id="menuIcon">☰</span>
+            </button>
+
+            <nav class="nav-menu" id="navMenu">
                 <a href="index.html" class="nav-link">Home</a>
                 <a href="about.html" class="nav-link">About</a>
                 <a href="products.html" class="nav-link">Loan Products</a>
                 <a href="contact.html" class="nav-link">Contact</a>
                 <a href="apply.html" class="nav-link nav-link-bold active">Apply Now</a>
-                <a href="admin.html" class="btn-login">Admin</a>
+                <a href="admin.html" class="btn-login">Login</a>
                 <button id="darkModeToggle" class="dark-mode-toggle" aria-label="Toggle dark mode">
                     <svg class="sun-icon" fill="currentColor" viewBox="0 0 20 20">
                         <path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z"/>
@@ -41,6 +45,9 @@
             </nav>
         </div>
     </header>
+
+    <!-- Mobile Menu Overlay -->
+    <div class="mobile-overlay" id="mobileOverlay"></div>
 
     <!-- Application Form -->
     <section class="apply-section">
@@ -118,6 +125,7 @@
                                 <span class="file-text">Choose file or drag here</span>
                             </label>
                             <span class="file-name" id="idDocumentName"></span>
+                            <div id="idDocumentPreview" class="file-preview-container"></div>
                         </div>
                     </div>
 
@@ -159,6 +167,7 @@
                                 <span class="file-text">Choose files or drag here (multiple allowed)</span>
                             </label>
                             <span class="file-name" id="businessDocsName"></span>
+                            <div id="businessDocsPreview" class="file-preview-container"></div>
                         </div>
                     </div>
 
@@ -224,6 +233,7 @@
                                 <span class="file-text">Choose PDF files (multiple allowed)</span>
                             </label>
                             <span class="file-name" id="bankStatementsName"></span>
+                            <div id="bankStatementsPreview" class="file-preview-container"></div>
                         </div>
                     </div>
 
@@ -239,6 +249,7 @@
                                 <span class="file-text">Choose files (optional)</span>
                             </label>
                             <span class="file-name" id="ownerIdsName"></span>
+                            <div id="ownerIdsPreview" class="file-preview-container"></div>
                         </div>
 
                         <div class="consent-section">
@@ -306,12 +317,13 @@
                 <a href="about.html">About</a>
                 <a href="products.html">Products</a>
                 <a href="apply.html">Apply for Loan</a>
-                <a href="#">Privacy Policy</a>
+                <a href="contact.html">Contact</a>
             </div>
             <p class="footer-copyright">© 2025 Springfield Financial Services Ltd. Ripon HG4 4DX, UK. All Rights Reserved.</p>
         </div>
     </footer>
 
+    <script src="api.js"></script>
     <script src="script.js"></script>
     <script src="apply.js"></script>
 </body>

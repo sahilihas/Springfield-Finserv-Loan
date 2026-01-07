@@ -23,13 +23,18 @@
                 </div>
                 <span class="logo-text">Springfield Financial</span>
             </div>
-            <nav class="nav-menu">
+            <!-- Mobile Menu Toggle -->
+            <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Toggle menu">
+                <span id="menuIcon">☰</span>
+            </button>
+
+            <nav class="nav-menu" id="navMenu">
                 <a href="index.html" class="nav-link active">Home</a>
                 <a href="about.html" class="nav-link">About</a>
                 <a href="products.html" class="nav-link">Loan Products</a>
                 <a href="contact.html" class="nav-link">Contact</a>
                 <a href="apply.html" class="nav-link nav-link-bold">Apply Now</a>
-                <a href="admin.html" class="btn-login">Admin</a>
+                <a href="admin.html" class="btn-login">Login</a>
                 <button id="darkModeToggle" class="dark-mode-toggle" aria-label="Toggle dark mode">
                     <svg class="sun-icon" fill="currentColor" viewBox="0 0 20 20">
                         <path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z"/>
@@ -42,11 +47,19 @@
         </div>
     </header>
 
+    <!-- Mobile Menu Overlay -->
+    <div class="mobile-overlay" id="mobileOverlay"></div>
+
+    <!-- Main Content -->
+    <div>
+        </div>
+    </header>
+
     <!-- Hero -->
     <section class="hero">
         <div class="hero-container">
             <div class="hero-content">
-                <h1 class="hero-title">Grow Your Business Without the Red Tape</h1>
+                <h1 class="hero-title">Grow Your Business—Without the Red Tape</h1>
                 <p class="hero-subtitle">Collateral-Free Loans · Low Interest Rates · Fast Decisions</p>
                 <div class="hero-buttons">
                     <a href="apply.html" class="btn btn-primary">Apply Now ►</a>
@@ -102,6 +115,140 @@
         </div>
     </section>
 
+    <!-- Why SMBs Love Springfield -->
+    <section class="love-section">
+        <div class="container">
+            <h2 class="section-title-light">Why SMBs Love Springfield</h2>
+            <div class="love-grid">
+                <div class="love-card">
+                    <span class="love-icon">⚡</span>
+                    <h3 class="love-title">Lightning-Fast Approval</h3>
+                    <span class="love-stat">1-5 Days</span>
+                    <p class="love-description">Get your loan approved in as little as 1 business day. Our digital-first approach means no endless paperwork or waiting weeks for decisions.</p>
+                </div>
+                <div class="love-card">
+                    <span class="love-icon">🛡️</span>
+                    <h3 class="love-title">No Collateral Required</h3>
+                    <span class="love-stat">$500K Max</span>
+                    <p class="love-description">Access up to $500,000 without putting your assets at risk. We evaluate your business potential, not just your property.</p>
+                </div>
+                <div class="love-card">
+                    <span class="love-icon">💰</span>
+                    <h3 class="love-title">Competitive Rates</h3>
+                    <span class="love-stat">From 12%</span>
+                    <p class="love-description">Industry-leading interest rates starting at 12% p.a. Save money while growing your business with fair, transparent pricing.</p>
+                </div>
+                <div class="love-card">
+                    <span class="love-icon">🤝</span>
+                    <h3 class="love-title">94% Approval Rate</h3>
+                    <span class="love-stat">94.2%</span>
+                    <p class="love-description">We say yes when others say no. Our mission is to empower SMBs, and our approval rate proves our commitment.</p>
+                </div>
+                <div class="love-card">
+                    <span class="love-icon">🌍</span>
+                    <h3 class="love-title">Global Reach, Local Touch</h3>
+                    <span class="love-stat">15+ Countries</span>
+                    <p class="love-description">Operating across emerging markets with deep local knowledge. Wall Street expertise meets community understanding.</p>
+                </div>
+                <div class="love-card">
+                    <span class="love-icon">📊</span>
+                    <h3 class="love-title">Flexible Repayment</h3>
+                    <span class="love-stat">6-36 Months</span>
+                    <p class="love-description">Choose repayment terms that match your cash flow cycles. No rigid schedules that strain your business operations.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="faq-section">
+        <div class="container">
+            <h2 class="section-title text-center">Frequently Asked Questions</h2>
+            <div class="title-divider mx-auto"></div>
+            <div class="faq-container">
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>What types of businesses do you finance?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>We finance a wide range of SMBs including retail, manufacturing, agriculture, services, technology, and more. As long as your business has a solid track record (typically 1+ years in operation) and demonstrates revenue growth, we're interested in supporting your expansion.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>How quickly can I get funded?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Our digital credit process allows us to make decisions in 1-5 business days. Once approved, funds are typically disbursed within 2-3 business days. In urgent cases, we can expedite the process for qualified applicants.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>Do I really need zero collateral?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Yes! We offer unsecured business loans up to $500,000. We assess your business based on revenue, cash flow, business history, and growth potential rather than requiring property or assets as security. This allows you to access capital without risking your personal or business assets.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>What documents do I need to apply?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>You'll need: (1) Government-issued ID, (2) Business registration documents, (3) Bank statements from the last 6 months, (4) Tax identification number (TIN), and (5) Basic financial information about your business. Our online application makes it easy to upload everything securely.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>Can I repay my loan early without penalties?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Absolutely! We encourage early repayment and offer flexible prepayment options with no penalties. If your business generates extra cash flow, you can pay down your loan faster and save on interest charges.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>What is your interest rate?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Our interest rates start from 12% per annum and vary based on factors like loan amount, term length, business history, and risk profile. We always provide transparent pricing with no hidden fees. Use our loan calculator on the Products page to estimate your monthly payments.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>Do you charge any application or processing fees?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>There are no upfront application fees. We believe in transparent pricing, so all costs are clearly disclosed before you accept any loan offer. Processing fees, if applicable, are included in your loan terms and never charged separately.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>What if my application is rejected?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>If we can't approve your application, we'll provide clear feedback on why and what you can do to strengthen your profile for future applications. We're committed to helping SMBs succeed, so we'll guide you on improving your financial position and may suggest reapplying after addressing specific issues.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Footer -->
     <footer class="footer">
         <div class="footer-container">
@@ -110,7 +257,7 @@
                 <a href="about.html">About</a>
                 <a href="products.html">Products</a>
                 <a href="apply.html">Apply for Loan</a>
-                <a href="#">Privacy Policy</a>
+                <a href="contact.html">Contact</a>
             </div>
             <p class="footer-copyright">© 2025 Springfield Financial Services Ltd. Ripon HG4 4DX, UK. All Rights Reserved.</p>
         </div>

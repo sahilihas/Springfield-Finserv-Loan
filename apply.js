@@ -1,5 +1,5 @@
 // ===================================
-// MULTI-STEP FORM LOGIC
+// MULTI-STEP FORM LOGIC WITH BACKEND
 // ===================================
 document.addEventListener('DOMContentLoaded', () => {
     let currentStep = 1;
@@ -108,33 +108,202 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // ===================================
-    // FILE UPLOAD HANDLERS
+    // FILE UPLOAD HANDLERS WITH PREVIEW
     // ===================================
     const fileInputs = [
-        { input: 'idDocument', display: 'idDocumentName' },
-        { input: 'businessDocs', display: 'businessDocsName' },
-        { input: 'bankStatements', display: 'bankStatementsName' },
-        { input: 'ownerIds', display: 'ownerIdsName' }
+        { input: 'idDocument', display: 'idDocumentName', preview: 'idDocumentPreview' },
+        { input: 'businessDocs', display: 'businessDocsName', preview: 'businessDocsPreview' },
+        { input: 'bankStatements', display: 'bankStatementsName', preview: 'bankStatementsPreview' },
+        { input: 'ownerIds', display: 'ownerIdsName', preview: 'ownerIdsPreview' }
     ];
 
-    fileInputs.forEach(({ input, display }) => {
+    // Store files for each input
+    const fileStorage = {};
+
+    fileInputs.forEach(({ input, display, preview }) => {
         const fileInput = document.getElementById(input);
         const fileDisplay = document.getElementById(display);
+        const previewContainer = document.getElementById(preview);
 
         if (fileInput && fileDisplay) {
+            // Initialize storage for this input
+            fileStorage[input] = [];
+
             fileInput.addEventListener('change', (e) => {
-                const files = e.target.files;
+                const files = Array.from(e.target.files);
+                
                 if (files.length > 0) {
-                    const fileNames = Array.from(files).map(f => f.name).join(', ');
-                    fileDisplay.textContent = `${files.length} file(s): ${fileNames}`;
+                    // Store files
+                    if (fileInput.multiple) {
+                        fileStorage[input] = [...fileStorage[input], ...files];
+                    } else {
+                        fileStorage[input] = files;
+                    }
+
+                    // Update display
+                    const totalFiles = fileStorage[input].length;
+                    const fileNames = fileStorage[input].map(f => f.name).join(', ');
+                    fileDisplay.textContent = `${totalFiles} file(s): ${fileNames}`;
                     fileDisplay.style.color = 'var(--primary)';
                     e.target.parentElement.classList.remove('error');
-                } else {
-                    fileDisplay.textContent = '';
+
+                    // Show preview
+                    if (previewContainer) {
+                        displayFilePreviews(fileStorage[input], previewContainer, input);
+                    }
                 }
             });
         }
     });
+
+    // Function to display file previews
+    function displayFilePreviews(files, container, inputId) {
+        container.innerHTML = '';
+        
+        files.forEach((file, index) => {
+            const previewItem = document.createElement('div');
+            previewItem.className = 'file-preview-item';
+            
+            const fileIcon = getFileIcon(file.type);
+            const fileSize = formatFileSize(file.size);
+            
+            previewItem.innerHTML = `
+                <div class="file-preview-icon">${fileIcon}</div>
+                <div class="file-preview-info">
+                    <div class="file-preview-name">${file.name}</div>
+                    <div class="file-preview-size">${fileSize}</div>
+                </div>
+                <div class="file-preview-actions">
+                    <button type="button" class="file-preview-btn file-preview-view" data-index="${index}">
+                        👁️ View
+                    </button>
+                    <button type="button" class="file-preview-btn file-preview-remove" data-index="${index}">
+                        ✕ Remove
+                    </button>
+                </div>
+            `;
+            
+            // Add event listeners
+            const viewBtn = previewItem.querySelector('.file-preview-view');
+            const removeBtn = previewItem.querySelector('.file-preview-remove');
+            
+            viewBtn.addEventListener('click', () => {
+                previewFile(file);
+            });
+            
+            removeBtn.addEventListener('click', () => {
+                removeFile(inputId, index, container);
+            });
+            
+            container.appendChild(previewItem);
+        });
+    }
+
+    // Get file icon based on type
+    function getFileIcon(type) {
+        if (type === 'application/pdf') return '📄';
+        if (type.startsWith('image/')) return '🖼️';
+        return '📎';
+    }
+
+    // Format file size
+    function formatFileSize(bytes) {
+        if (bytes === 0) return '0 Bytes';
+        const k = 1024;
+        const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+        const i = Math.floor(Math.log(bytes) / Math.log(k));
+        return Math.round(bytes / Math.pow(k, i) * 100) / 100 + ' ' + sizes[i];
+    }
+
+    // Preview file (PDF or Image)
+    function previewFile(file) {
+        const reader = new FileReader();
+        
+        reader.onload = function(e) {
+            const modal = createPreviewModal(file.name, e.target.result, file.type);
+            document.body.appendChild(modal);
+            
+            // Prevent body scroll
+            document.body.style.overflow = 'hidden';
+        };
+        
+        reader.readAsDataURL(file);
+    }
+
+    // Create preview modal
+    function createPreviewModal(filename, dataUrl, fileType) {
+        const modal = document.createElement('div');
+        modal.className = 'preview-modal active';
+        
+        let previewContent = '';
+        if (fileType === 'application/pdf') {
+            previewContent = `<iframe class="preview-iframe" src="${dataUrl}" type="application/pdf"></iframe>`;
+        } else if (fileType.startsWith('image/')) {
+            previewContent = `<img class="preview-image" src="${dataUrl}" alt="Preview">`;
+        }
+        
+        modal.innerHTML = `
+            <div class="preview-modal-content">
+                <div class="preview-modal-header">
+                    <div class="preview-modal-title">${filename}</div>
+                    <button class="preview-modal-close">&times;</button>
+                </div>
+                <div class="preview-modal-body">
+                    ${previewContent}
+                </div>
+            </div>
+        `;
+        
+        // Close button
+        const closeBtn = modal.querySelector('.preview-modal-close');
+        closeBtn.addEventListener('click', () => {
+            modal.remove();
+            document.body.style.overflow = '';
+        });
+        
+        // Click outside to close
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                modal.remove();
+                document.body.style.overflow = '';
+            }
+        });
+        
+        // ESC key to close
+        const escHandler = (e) => {
+            if (e.key === 'Escape') {
+                modal.remove();
+                document.body.style.overflow = '';
+                document.removeEventListener('keydown', escHandler);
+            }
+        };
+        document.addEventListener('keydown', escHandler);
+        
+        return modal;
+    }
+
+    // Remove file from storage
+    function removeFile(inputId, index, container) {
+        fileStorage[inputId].splice(index, 1);
+        
+        // Update display
+        const fileDisplay = document.getElementById(inputId + 'Name');
+        if (fileStorage[inputId].length > 0) {
+            const fileNames = fileStorage[inputId].map(f => f.name).join(', ');
+            fileDisplay.textContent = `${fileStorage[inputId].length} file(s): ${fileNames}`;
+        } else {
+            fileDisplay.textContent = '';
+        }
+        
+        // Refresh preview
+        displayFilePreviews(fileStorage[inputId], container, inputId);
+        
+        // Update the actual file input (create new FileList)
+        const fileInput = document.getElementById(inputId);
+        const dataTransfer = new DataTransfer();
+        fileStorage[inputId].forEach(file => dataTransfer.items.add(file));
+        fileInput.files = dataTransfer.files;
+    }
 
     // ===================================
     // CONDITIONAL FIELDS
@@ -160,10 +329,10 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // ===================================
-    // FORM SUBMISSION
+    // FORM SUBMISSION WITH BACKEND API
     // ===================================
     if (form) {
-        form.addEventListener('submit', (e) => {
+        form.addEventListener('submit', async (e) => {
             e.preventDefault();
 
             // Check honeypot
@@ -177,100 +346,38 @@ document.addEventListener('DOMContentLoaded', () => {
                 return;
             }
 
-            // Collect form data
-            const formData = new FormData(form);
-            const applicationData = {
-                id: 'APP-' + Date.now(),
-                submittedAt: new Date().toISOString(),
-                status: 'Pending Review',
-                
-                // Applicant Information
-                applicant: {
-                    fullName: formData.get('fullName'),
-                    email: formData.get('email'),
-                    phone: formData.get('phone'),
-                    whatsapp: formData.get('whatsapp'),
-                    dateOfBirth: formData.get('dateOfBirth'),
-                    nationality: formData.get('nationality'),
-                    address: formData.get('address'),
-                    idType: formData.get('idType'),
-                    idNumber: formData.get('idNumber')
-                },
-                
-                // Business Information
-                business: {
-                    name: formData.get('businessName'),
-                    regNumber: formData.get('businessRegNumber'),
-                    entity: formData.get('businessEntity'),
-                    industry: formData.get('industry'),
-                    address: formData.get('businessAddress'),
-                    established: formData.get('businessEstablished'),
-                    tin: formData.get('tin'),
-                    website: formData.get('businessWebsite'),
-                    ownerNames: formData.get('ownerNames'),
-                    ownershipPercentage: formData.get('ownershipPercentage')
-                },
-                
-                // Loan Details
-                loan: {
-                    amount: formData.get('loanAmount'),
-                    purpose: formData.get('loanPurpose'),
-                    term: formData.get('repaymentTerm'),
-                    startDate: formData.get('proposedStartDate')
-                },
-                
-                // Financial Details
-                financial: {
-                    annualRevenue: formData.get('annualRevenue'),
-                    monthlySales: formData.get('monthlySales'),
-                    monthlyExpenses: formData.get('monthlyExpenses'),
-                    existingLoans: formData.get('existingLoans'),
-                    lenderName: formData.get('lenderName') || null,
-                    outstandingBalance: formData.get('outstandingBalance') || null,
-                    monthlyRepayment: formData.get('monthlyRepayment') || null
-                },
-                
-                // Declarations
-                declarations: {
-                    certifyInfo: formData.get('certifyInfo') === 'on',
-                    authorizeVerification: formData.get('authorizeVerification') === 'on',
-                    agreeTerms: formData.get('agreeTerms') === 'on',
-                    digitalSignature: formData.get('digitalSignature'),
-                    preferredContact: formData.get('preferredContact')
-                },
-                
-                // File information
-                documents: {
-                    idDocument: formData.get('idDocument')?.name || null,
-                    businessDocs: Array.from(formData.getAll('businessDocs')).map(f => f.name),
-                    bankStatements: Array.from(formData.getAll('bankStatements')).map(f => f.name),
-                    ownerIds: Array.from(formData.getAll('ownerIds')).map(f => f.name)
-                }
-            };
+            // Show loading state
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Submitting...';
 
-            // Store application data
             try {
-                const applications = JSON.parse(sessionStorage.getItem('loanApplications') || '[]');
-                applications.push(applicationData);
-                sessionStorage.setItem('loanApplications', JSON.stringify(applications));
-                
-                console.log('Application submitted:', applicationData);
-                
-                // Show confirmation
-                form.classList.add('hidden');
-                confirmationDiv.classList.remove('hidden');
-                
-                // Display application ID
-                const appIdElement = document.getElementById('applicationId');
-                if (appIdElement) {
-                    appIdElement.textContent = applicationData.id;
+                // Create FormData object for file upload
+                const formData = new FormData(form);
+
+                // Submit to backend API
+                const response = await api.submitApplication(formData);
+
+                if (response.success) {
+                    // Show confirmation
+                    form.classList.add('hidden');
+                    confirmationDiv.classList.remove('hidden');
+                    
+                    // Display application ID
+                    const appIdElement = document.getElementById('applicationId');
+                    if (appIdElement) {
+                        appIdElement.textContent = response.applicationId;
+                    }
+                    
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                } else {
+                    throw new Error(response.message || 'Submission failed');
                 }
-                
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-                
+
             } catch (error) {
-                console.error('Error saving application:', error);
-                alert('There was an error submitting your application. Please try again.');
+                console.error('Error submitting application:', error);
+                alert('There was an error submitting your application. Please try again. Error: ' + error.message);
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Submit Application';
             }
         });
     }

@@ -377,10 +377,10 @@
 }
 
 .search-box input {
-    width: 100%;
+    width: 95%;
     padding: 0.75rem 1rem 0.75rem 3rem;
     border: 1px solid var(--border-color);
-    border-radius: 8px;
+    border-radius: 10px;
     background-color: var(--bg-secondary);
     color: var(--text-main);
 }
@@ -391,9 +391,9 @@
 }
 
 .filter-select {
-    padding: 0.75rem 1rem;
+    padding: 0.5rem 1rem;
     border: 1px solid var(--border-color);
-    border-radius: 8px;
+    border-radius: 10px;
     background-color: var(--bg-secondary);
     color: var(--text-main);
     font-weight: 500;
@@ -782,29 +782,6 @@
 }
 
 @media (max-width: 768px) {
-    .admin-layout {
-        flex-direction: column;
-    }
-
-    .admin-sidebar {
-        width: 100%;
-        border-right: none;
-        border-bottom: 1px solid var(--border-color);
-        padding: 1rem 0;
-    }
-
-    .admin-nav {
-        flex-direction: row;
-        overflow-x: auto;
-    }
-
-    .admin-nav-item {
-        flex-direction: column;
-        padding: 0.75rem 1rem;
-        gap: 0.25rem;
-        font-size: 0.75rem;
-    }
-
     .stats-grid {
         grid-template-columns: 1fr;
     }
@@ -828,5 +805,56 @@
 
     .progress-label {
         font-size: 0.625rem;
+    }
+}
+
+.admin-menu-toggle {
+    display: none;
+    font-size: 1.5rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--text-main);
+}
+.admin-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+    z-index: 90;
+}
+
+.admin-overlay.active {
+    display: block;
+}
+
+@media (max-width: 768px) {
+
+    .admin-menu-toggle {
+        display: block;
+    }
+
+    .admin-layout {
+        flex-direction: row;
+    }
+
+    .admin-sidebar {
+        position: fixed;
+        top: 73px;
+        left: -100%;
+        height: calc(100vh - 73px);
+        width: 260px;
+        z-index: 100;
+        transition: left 0.3s ease;
+        background-color: var(--bg-secondary);
+    }
+
+    .admin-sidebar.active {
+        left: 0;
+    }
+
+    /* REMOVE horizontal nav */
+    .admin-nav {
+        flex-direction: column;
     }
 }

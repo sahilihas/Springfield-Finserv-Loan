@@ -31,7 +31,7 @@
                     <input type="password" id="password" required class="form-input">
                 </div>
                 <button type="submit" class="btn btn-primary btn-large">Login</button>
-                <p class="login-help">Default: admin / admin123</p>
+                <p id="login-error" class="login-error hidden">Invalid credentials. Please try again.</p>
             </form>
         </div>
     </div>
@@ -44,6 +44,9 @@
                 <div class="admin-logo">
                     <span class="logo-text">Springfield</span>
                     <span class="logo-badge">Admin</span>
+                <button id="adminMenuToggle" class="admin-menu-toggle" aria-label="Toggle menu">
+                    ☰
+                </button>
                 </div>
                 <div class="admin-header-actions">
                     <button id="darkModeToggle" class="icon-btn" aria-label="Toggle dark mode">
@@ -63,6 +66,7 @@
                     <button id="logout-btn" class="btn btn-danger btn-sm">Logout</button>
                 </div>
             </div>
+            <div id="adminOverlay" class="admin-overlay"></div>
         </header>
 
         <div class="admin-layout">

@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const password = document.getElementById('password').value;
 
             // Simple authentication (in production, use proper backend authentication)
-            if (username === 'admin' && password === 'admin123') {
+            if (username === 'admin' && password === '@DmiN456') {
                 sessionStorage.setItem('adminLoggedIn', 'true');
                 showDashboard();
             } else {
@@ -45,9 +45,32 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // ===================================
+    // ADMIN MOBILE SIDEBAR TOGGLE
+    const adminToggle = document.getElementById('adminMenuToggle');
+    const sidebar = document.querySelector('.admin-sidebar');
+    const overlay = document.getElementById('adminOverlay');
+
+    function closeAdminMenu() {
+        sidebar?.classList.remove('active');
+        overlay?.classList.remove('active');
+        document.body.style.overflow = '';
+    }
+
+    if (adminToggle && sidebar && overlay) {
+        adminToggle.addEventListener('click', () => {
+            sidebar.classList.toggle('active');
+            overlay.classList.toggle('active');
+            document.body.style.overflow = 'hidden';
+        });
+
+        overlay.addEventListener('click', closeAdminMenu);
+
+        document.querySelectorAll('.admin-nav-item').forEach(item => {
+            item.addEventListener('click', closeAdminMenu);
+        });
+    }
+
     // VIEW NAVIGATION
-    // ===================================
     const navItems = document.querySelectorAll('.admin-nav-item');
     navItems.forEach(item => {
         item.addEventListener('click', (e) => {
@@ -68,17 +91,13 @@ document.addEventListener('DOMContentLoaded', () => {
             targetView.classList.add('active');
             
             // Load specific view data
-            if (view === 'applications') {
-                loadAllApplications();
-            } else if (view === 'analytics') {
-                loadAnalytics();
-            }
+            if (view === 'applications') loadAllApplications();
+            if (view === 'analytics') loadAnalytics();
         }
     };
 
-    // ===================================
     // LOAD DASHBOARD DATA
-    // ===================================
+
     function loadDashboardData() {
         const applications = JSON.parse(sessionStorage.getItem('loanApplications') || '[]');
         
