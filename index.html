@@ -12,17 +12,26 @@
 <body>
     <!-- Header -->
     <header class="header">
-        <div class="header-container">
-            <div class="logo">
-                <div class="logo-icon w-12 h-12 rounded-lg flex items-center justify-center" style="background-color: #003366;">
-                    <svg viewBox="0 0 100 100" class="w-8 h-8 text-white" fill="none" stroke="currentColor" stroke-width="6" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M20 45 L50 20 L80 45 V80 H20 Z" />
-                        <path d="M35 80 V60 H45 V80" fill="white" stroke="none" />
-                        <path d="M55 80 V50 H65 V80" fill="white" stroke="none" />
-                    </svg>
-                </div>
-                <span class="logo-text">Springfield Financial</span>
-            </div>
+    <div class="header-container">
+        <a href="index.html" class="logo" aria-label="Springfield Financial Home">
+            <div class="logo-icon"
+           style="background-color:#003366; width:32px; height:32px; border-radius:8px; display:flex; align-items:center; justify-content:center;">
+            <svg viewBox="0 0 100 100"
+             width="20"
+             height="20"
+             fill="none"
+             stroke="currentColor"
+             stroke-width="6"
+             stroke-linecap="round"
+             stroke-linejoin="round"
+             style="color:white;">
+             <path d="M20 45 L50 20 L80 45 V80 H20 Z" />
+             <path d="M35 80 V60 H45 V80" fill="white" stroke="none" />
+             <path d="M55 80 V50 H65 V80" fill="white" stroke="none" />
+            </svg>
+        </div>
+      <span class="logo-text">Springfield Financial</span>
+        </a>
             <!-- Mobile Menu Toggle -->
             <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Toggle menu">
                 <span id="menuIcon">☰</span>
@@ -49,11 +58,7 @@
 
     <!-- Mobile Menu Overlay -->
     <div class="mobile-overlay" id="mobileOverlay"></div>
-
-    <!-- Main Content -->
-    <div>
-        </div>
-    </header>
+    <!-- End Mobile Menu Overlay -->   
 
     <!-- Hero -->
     <section class="hero">
@@ -62,7 +67,7 @@
                 <h1 class="hero-title">Grow Your Business—Without the Red Tape</h1>
                 <p class="hero-subtitle">Collateral-Free Loans · Low Interest Rates · Fast Decisions</p>
                 <div class="hero-buttons">
-                    <a href="apply.html" class="btn btn-primary">Apply Now ►</a>
+                    <a href="apply.html" class="btn btn-primary">Apply Now</a>
                     <a href="about.html" class="btn btn-secondary">Our Story</a>
                 </div>
             </div>

@@ -132,8 +132,8 @@
 }
 
 .btn-sm {
-    padding: 0.5rem 1rem;
-    font-size: 0.875rem;
+    padding: 0.6rem 1rem;
+    font-size: 0.8rem;
 }
 
 .btn-danger {
@@ -240,6 +240,7 @@
 
 .page-header {
     margin-bottom: 2rem;
+    border-radius: 8px;
 }
 
 .page-header h1 {
