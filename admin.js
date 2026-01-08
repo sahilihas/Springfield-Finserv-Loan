@@ -1,6 +1,6 @@
-// ===================================
-// ADMIN AUTHENTICATION
-// ===================================
+console.log("admin.js loaded");
+
+//ADMIN AUTHENTICATION
 document.addEventListener('DOMContentLoaded', () => {
     const loginOverlay = document.getElementById('login-overlay');
     const dashboardContent = document.getElementById('dashboard-content');
@@ -121,9 +121,7 @@ document.addEventListener('DOMContentLoaded', () => {
         loadRecentApplications(applications.slice(-5).reverse());
     }
 
-    // ===================================
     // LOAD RECENT APPLICATIONS
-    // ===================================
     function loadRecentApplications(applications) {
         const tbody = document.getElementById('recent-applications-body');
         if (!tbody) return;
@@ -145,9 +143,7 @@ document.addEventListener('DOMContentLoaded', () => {
         `).join('');
     }
 
-    // ===================================
     // LOAD ALL APPLICATIONS
-    // ===================================
     function loadAllApplications() {
         const applications = JSON.parse(sessionStorage.getItem('loanApplications') || '[]');
         const tbody = document.getElementById('applicationsBody');
@@ -179,9 +175,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     window.loadAllApplications = loadAllApplications;
 
-    // ===================================
     // STATUS BADGE
-    // ===================================
     function getStatusBadge(status) {
         const statusClasses = {
             'Pending Review': 'status-pending',
@@ -193,9 +187,7 @@ document.addEventListener('DOMContentLoaded', () => {
         return `<span class="status-badge ${className}">${status}</span>`;
     }
 
-    // ===================================
     // VIEW APPLICATION DETAILS
-    // ===================================
     window.viewApplication = function(id) {
         const applications = JSON.parse(sessionStorage.getItem('loanApplications') || '[]');
         const app = applications.find(a => a.id === id);
@@ -337,9 +329,7 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('appModal').classList.add('hidden');
     };
 
-    // ===================================
     // UPDATE APPLICATION STATUS
-    // ===================================
     window.updateStatus = function(newStatus) {
         if (!window.currentAppId) return;
 
@@ -358,9 +348,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
-    // ===================================
     // SEARCH & FILTER
-    // ===================================
     const searchInput = document.getElementById('searchInput');
     const statusFilter = document.getElementById('statusFilter');
 
@@ -416,9 +404,7 @@ document.addEventListener('DOMContentLoaded', () => {
         `).join('');
     }
 
-    // ===================================
-    // EXPORT FUNCTIONS
-    // ===================================
+    //EXPORT FUNCTIONS
     window.exportToCSV = function() {
         const applications = JSON.parse(sessionStorage.getItem('loanApplications') || '[]');
         

@@ -40,7 +40,7 @@
                 <a href="products.html" class="nav-link">Loan Products</a>
                 <a href="contact.html" class="nav-link">Contact</a>
                 <a href="apply.html" class="nav-link nav-link-bold active">Apply Now</a>
-                <a href="admin.html" class="btn-login">Login</a>
+                <a href="admin.html" class="btn-login">Admin</a>
                 <button id="darkModeToggle" class="dark-mode-toggle" aria-label="Toggle dark mode">
                     <svg class="sun-icon" fill="currentColor" viewBox="0 0 20 20">
                         <path
@@ -200,8 +200,8 @@
                         <div class="form-row">
                             <input type="number" name="loanAmount" placeholder="Loan Amount (USD) *" min="10000"
                                 max="500000" required class="form-input">
-                            <select name="loanPurpose" class="form-input" required multiple size="1">
-                                <option value="">Purpose of Loan *</option>
+                            <select name="loanPurpose" class="form-input" name="Purpose of Loan" placeholder="Purpose of Loan" required multiple size="1">
+                                <!-- <option value="">Purpose of Loan *</option>*/ -->
                                 <option value="working_capital">Working Capital</option>
                                 <option value="equipment">Equipment Purchase</option>
                                 <option value="inventory">Inventory</option>
@@ -364,10 +364,7 @@
                 Reserved.</p>
         </div>
     </footer>
-
-    <script src="api.js"></script>
+</body>
     <script src="script.js"></script>
     <script src="apply.js"></script>
-</body>
-
 </html>

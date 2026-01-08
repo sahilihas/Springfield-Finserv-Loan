@@ -1,3 +1,5 @@
+console.log("apply.js loaded");
+
 // MULTI-STEP FORM LOGIC WITH BACKEND
 document.addEventListener('DOMContentLoaded', () => {
     let currentStep = 1;
@@ -316,13 +318,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // Check honeypot and validate current step
             const honeypot = document.getElementById('website');
-            if (honeypot && honeypot.value) {
-                return; // Bot detected here
-            }
+            if (honeypot && honeypot.value) return; // Bot detected here
+
             // Validate final step and all required fields
-            if (!validateStep(currentStep)) {
-                return;
-            }
+            if (!validateStep(currentStep)) return;
             // Show loading state
             submitBtn.disabled = true;
             submitBtn.textContent = 'Submitting...';
@@ -337,14 +336,25 @@ document.addEventListener('DOMContentLoaded', () => {
                 applicationData.status = 'Pending Review';
                 applicationData.submittedAt = new Date().toISOString();
 
-                const existingApps = JSON.parse(localStorage.getItem('loanApplications')) || [];
+                const existingApps =
+                    JSON.parse(sessionStorage.getItem('loanApplications')) || [];
+
                 existingApps.push(applicationData);
-                localStorage.setItem('loanApplications', JSON.stringify(existingApps));
+
+                sessionStorage.setItem(
+                    'loanApplications',
+                    JSON.stringify(existingApps)
+                );
 
                 form.classList.add('hidden');
                 confirmationDiv.classList.remove('hidden');
                 
-                document.getElementById('applicationId').textContent = applicationData.id;
+                document.getElementById('applicationId').textContent = 
+                   applicationData.id;
+
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Submit Application';
+                
                 window.scrollTo({ top: 0, behavior: 'smooth' });
 
                 /* Submit to backend API

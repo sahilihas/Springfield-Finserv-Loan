@@ -266,8 +266,8 @@ a {
 
     .btn-login,
     .dark-mode-toggle {
-        margin: 1rem 2rem;
-        width: calc(100% - 4rem);
+        margin: 0.9rem 0.9rem;
+        width: calc(40%);
     }
 
     .dark-mode-toggle {
