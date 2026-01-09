@@ -1,252 +1,291 @@
 console.log("admin.js loaded");
 //ADMIN AUTHENTICATION
-document.addEventListener('DOMContentLoaded', () => {
-    const loginOverlay = document.getElementById('login-overlay');
-    const dashboardContent = document.getElementById('dashboard-content');
-    const loginForm = document.getElementById('login-form');
-    const logoutBtn = document.getElementById('logout-btn');
+document.addEventListener("DOMContentLoaded", () => {
+  const loginOverlay = document.getElementById("login-overlay");
+  const dashboardContent = document.getElementById("dashboard-content");
+  const loginForm = document.getElementById("login-form");
+  const logoutBtn = document.getElementById("logout-btn");
 
-    // Check if already logged in
-    if (sessionStorage.getItem('adminLoggedIn')) {
+  // Check if already logged in
+  if (sessionStorage.getItem("adminLoggedIn")) {
+    showDashboard();
+  }
+
+  // Login handler
+  if (loginForm) {
+    loginForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const username = document.getElementById("username").value;
+      const password = document.getElementById("password").value;
+
+      // Simple authentication (in production, use proper backend authentication)
+      if (username === "admin" && password === "@DmiN456") {
+        sessionStorage.setItem("adminLoggedIn", "true");
         showDashboard();
+      } else {
+        alert("Invalid credentials. Please try again.");
+      }
+    });
+  }
+
+  // Logout handler
+  if (logoutBtn) {
+    logoutBtn.addEventListener("click", () => {
+      sessionStorage.removeItem("adminLoggedIn");
+      location.reload();
+    });
+  }
+
+  function showDashboard() {
+    if (loginOverlay) loginOverlay.style.display = "none";
+    if (dashboardContent) {
+      dashboardContent.classList.remove("hidden");
+      loadDashboardData();
     }
+  }
 
-    // Login handler
-    if (loginForm) {
-        loginForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            const username = document.getElementById('username').value;
-            const password = document.getElementById('password').value;
+  // ADMIN MOBILE SIDEBAR TOGGLE
+  const adminToggle = document.getElementById("adminMenuToggle");
+  const sidebar = document.querySelector(".admin-sidebar");
+  const overlay = document.getElementById("adminOverlay");
 
-            // Simple authentication (in production, use proper backend authentication)
-            if (username === 'admin' && password === '@DmiN456') {
-                sessionStorage.setItem('adminLoggedIn', 'true');
-                showDashboard();
-            } else {
-                alert('Invalid credentials. Please try again.');
-            }
-        });
-    }
+  function closeAdminMenu() {
+    sidebar?.classList.remove("active");
+    overlay?.classList.remove("active");
+    document.body.style.overflow = "";
+  }
 
-    // Logout handler
-    if (logoutBtn) {
-        logoutBtn.addEventListener('click', () => {
-            sessionStorage.removeItem('adminLoggedIn');
-            location.reload();
-        });
-    }
-
-    function showDashboard() {
-        if (loginOverlay) loginOverlay.style.display = 'none';
-        if (dashboardContent) {
-            dashboardContent.classList.remove('hidden');
-            loadDashboardData();
-        }
-    }
-
-    // ADMIN MOBILE SIDEBAR TOGGLE
-    const adminToggle = document.getElementById('adminMenuToggle');
-    const sidebar = document.querySelector('.admin-sidebar');
-    const overlay = document.getElementById('adminOverlay');
-
-    function closeAdminMenu() {
-        sidebar?.classList.remove('active');
-        overlay?.classList.remove('active');
-        document.body.style.overflow = '';
-    }
-
-    if (adminToggle && sidebar && overlay) {
-        adminToggle.addEventListener('click', () => {
-            sidebar.classList.toggle('active');
-            overlay.classList.toggle('active');
-            document.body.style.overflow = 'hidden';
-        });
-
-        overlay.addEventListener('click', closeAdminMenu);
-
-        document.querySelectorAll('.admin-nav-item').forEach(item => {
-            item.addEventListener('click', closeAdminMenu);
-        });
-    }
-
-    // VIEW NAVIGATION
-    const navItems = document.querySelectorAll('.admin-nav-item');
-    navItems.forEach(item => {
-        item.addEventListener('click', (e) => {
-            e.preventDefault();
-            const view = item.dataset.view;
-            switchView(view);
-            
-            // Update active state
-            navItems.forEach(nav => nav.classList.remove('active'));
-            item.classList.add('active');
-        });
+  if (adminToggle && sidebar && overlay) {
+    adminToggle.addEventListener("click", () => {
+      sidebar.classList.toggle("active");
+      overlay.classList.toggle("active");
+      document.body.style.overflow = "hidden";
     });
 
-    window.switchView = function(view) {
-        document.querySelectorAll('.admin-view').forEach(v => v.classList.remove('active'));
-        const targetView = document.getElementById(`view-${view}`);
-        if (targetView) {
-            targetView.classList.add('active');
-            
-            // Load specific view data
-            if (view === 'applications') loadAllApplications();
-            if (view === 'analytics') loadAnalytics();
-        }
-    };
+    overlay.addEventListener("click", closeAdminMenu);
 
-    // LOAD DASHBOARD DATA FROM BACKEND
+    document.querySelectorAll(".admin-nav-item").forEach((item) => {
+      item.addEventListener("click", closeAdminMenu);
+    });
+  }
 
-    async function loadDashboardData() {
-        try {
-            console.log('Loading dashboard data from backend...');
+  // VIEW NAVIGATION
+  const navItems = document.querySelectorAll(".admin-nav-item");
+  navItems.forEach((item) => {
+    item.addEventListener("click", (e) => {
+      e.preventDefault();
+      const view = item.dataset.view;
+      switchView(view);
 
-            // Fetch all applications from backend
-            const applications = await window.api.getAllApplications();
-            console.log('Fetched applications:', applications);
+      // Update active state
+      navItems.forEach((nav) => nav.classList.remove("active"));
+      item.classList.add("active");
+    });
+  });
 
-        // Update stats
-        document.getElementById('total-applications').textContent = applications.length;
-        document.getElementById('app-count').textContent = applications.length;
-        
-        const pending = applications.filter(app => app.status === 'Pending Review').length;
-        const approved = applications.filter(app => app.status === 'Approved').length;
-        
-        document.getElementById('pending-applications').textContent = pending;
-        document.getElementById('approved-applications').textContent = approved;
-        
-        // Calculate total capital
-        const totalCapital = applications.reduce((sum, app) => {
-            return sum + (parseFloat(app.loan?.amount) || 0);
-        }, 0);
-        document.getElementById('total-capital').textContent = `$${(totalCapital / 1000000).toFixed(2)}M`;
-        
-        // Load recent applications (last 5)
-        const recentApps = applications.slice(0, -5);
-        loadRecentApplications(recentApps);
+  window.switchView = function (view) {
+    document
+      .querySelectorAll(".admin-view")
+      .forEach((v) => v.classList.remove("active"));
+    const targetView = document.getElementById(`view-${view}`);
+    if (targetView) {
+      targetView.classList.add("active");
 
+      // Load specific view data
+      if (view === "applications") loadAllApplications();
+      if (view === "analytics") loadAnalytics();
+    }
+  };
+
+  // LOAD DASHBOARD DATA FROM BACKEND
+
+  async function loadDashboardData() {
+    try {
+      console.log("Loading dashboard data from backend...");
+
+      // Fetch all applications from backend
+      const applications = await window.api.getAllApplications();
+      console.log("Fetched applications:", applications);
+
+      // Update stats
+      document.getElementById("total-applications").textContent =
+        applications.length;
+      document.getElementById("app-count").textContent = applications.length;
+
+      const pending = applications.filter(
+        (app) => app.status === "Pending Review"
+      ).length;
+      const approved = applications.filter(
+        (app) => app.status === "Approved"
+      ).length;
+
+      document.getElementById("pending-applications").textContent = pending;
+      document.getElementById("approved-applications").textContent = approved;
+
+      // Calculate total capital
+      const totalCapital = applications.reduce((sum, app) => {
+        return sum + (parseFloat(app.loan?.amount) || 0);
+      }, 0);
+      document.getElementById("total-capital").textContent = `$${(
+        totalCapital / 1000000
+      ).toFixed(2)}M`;
+
+      // Load recent applications (last 5)
+      const recentApps = applications.slice(0, -5);
+      loadRecentApplications(recentApps);
     } catch (error) {
-        console.error('Error loading dashboard data:', error);
-        alert('Failed to load dashboard data. Please refresh the page.');
-     }
-}
+      console.error("Error loading dashboard data:", error);
+      alert("Failed to load dashboard data. Please refresh the page.");
+    }
+  }
 
-    // LOAD RECENT APPLICATIONS
-    function loadRecentApplications(applications) {
-        const tbody = document.getElementById('recent-applications-body');
-        if (!tbody) return;
+  // LOAD RECENT APPLICATIONS
+  function loadRecentApplications(applications) {
+    const tbody = document.getElementById("recent-applications-body");
+    if (!tbody) return;
 
-        if (applications.length === 0) {
-            tbody.innerHTML = '<tr><td colspan="6" class="empty-state">No applications yet</td></tr>';
-            return;
-        }
+    if (applications.length === 0) {
+      tbody.innerHTML =
+        '<tr><td colspan="6" class="empty-state">No applications yet</td></tr>';
+      return;
+    }
 
-        tbody.innerHTML = applications.map(app => `
+    tbody.innerHTML = applications
+      .map(
+        (app) => `
             <tr onclick="viewApplication('${app.id}')" style="cursor: pointer;">
                 <td><strong>${app.id}</strong></td>
-                <td>${app.applicant?.fullName || 'N/A'}</td>
-                <td>${app.business?.name || 'N/A'}</td>
-                <td><strong>$${parseFloat(app.loan?.amount || 0).toLocaleString()}</strong></td>
+                <td>${app.applicant?.fullName || "N/A"}</td>
+                <td>${app.business?.name || "N/A"}</td>
+                <td><strong>$${parseFloat(
+                  app.loan?.amount || 0
+                ).toLocaleString()}</strong></td>
                 <td>${getStatusBadge(app.status)}</td>
                 <td>${new Date(app.submittedAt).toLocaleDateString()}</td>
             </tr>
-        `).join('');
-    }
+        `
+      )
+      .join("");
+  }
 
-    // LOAD ALL APPLICATIONS FROM BACKEND
-    async function loadAllApplications() {
-        try {
-            console.log('Loading all applications from backend...');
+  // LOAD ALL APPLICATIONS FROM BACKEND
+  async function loadAllApplications() {
+    try {
+      console.log("Loading all applications from backend...");
 
-            const applications = await window.api.getAllApplications();
-            const tbody = document.getElementById('applicationsBody');
-      
-            if (!tbody) return;
+      const applications = await window.api.getAllApplications();
+      const tbody = document.getElementById("applicationsBody");
 
-            if (applications.length === 0) {
-            tbody.innerHTML = '<tr><td colspan="9" class="empty-state">No applications found</td></tr>';
-            return;
-        }
+      if (!tbody) return;
 
-        tbody.innerHTML = applications.map(app => `
+      if (applications.length === 0) {
+        tbody.innerHTML =
+          '<tr><td colspan="9" class="empty-state">No applications found</td></tr>';
+        return;
+      }
+
+      tbody.innerHTML = applications
+        .map(
+          (app) => `
             <tr>
-                <td><input type="checkbox" class="app-checkbox" data-id="${app.id}"></td>
+                <td><input type="checkbox" class="app-checkbox" data-id="${
+                  app.id
+                }"></td>
                 <td><strong>${app.id}</strong></td>
-                <td>${app.applicant?.fullName || 'N/A'}</td>
-                <td>${app.business?.name || 'N/A'}</td>
-                <td><strong>$${parseFloat(app.loan?.amount || 0).toLocaleString()}</strong></td>
-                <td class="capitalize">${app.loan?.purpose?.replace('_', ' ') || 'N/A'}</td>
+                <td>${app.applicant?.fullName || "N/A"}</td>
+                <td>${app.business?.name || "N/A"}</td>
+                <td><strong>$${parseFloat(
+                  app.loan?.amount || 0
+                ).toLocaleString()}</strong></td>
+                <td class="capitalize">${
+                  app.loan?.purpose?.replace("_", " ") || "N/A"
+                }</td>
                 <td>${getStatusBadge(app.status)}</td>
                 <td>${new Date(app.submittedAt).toLocaleDateString()}</td>
                 <td>
                     <div class="action-buttons">
-                        <button class="action-btn action-btn-primary" onclick="viewApplication('${app.id}')">View</button>
+                        <button class="action-btn action-btn-primary" onclick="viewApplication('${
+                          app.id
+                        }')">View</button>
                     </div>
                 </td>
             </tr>
-        `).join('');
-
-        } catch (error) {
-            console.error('Error loading all applications:', error);
-            alert("failed to load applications. please refresh the page.");
-        }
+        `
+        )
+        .join("");
+    } catch (error) {
+      console.error("Error loading all applications:", error);
+      alert("failed to load applications. please refresh the page.");
     }
-    window.loadAllApplications = loadAllApplications;
+  }
+  window.loadAllApplications = loadAllApplications;
 
-    // STATUS BADGE
-    function getStatusBadge(status) {
-        const statusClasses = {
-            'Pending Review': 'status-pending',
-            'Approved': 'status-approved',
-            'Rejected': 'status-rejected',
-            'Under Review': 'status-review'
-        };
-        const className = statusClasses[status] || 'status-pending';
-        return `<span class="status-badge ${className}">${status}</span>`;
-    }
+  // STATUS BADGE
+  function getStatusBadge(status) {
+    const statusClasses = {
+      "Pending Review": "status-pending",
+      Approved: "status-approved",
+      Rejected: "status-rejected",
+      "Under Review": "status-review",
+    };
+    const className = statusClasses[status] || "status-pending";
+    return `<span class="status-badge ${className}">${status}</span>`;
+  }
 
-    // VIEW APPLICATION DETAILS
-    window.viewApplication = async function(id) {
-        try {
-            console.log('Fetching application:', id);
+  // VIEW APPLICATION DETAILS
+  window.viewApplication = async function (id) {
+    try {
+      console.log("Fetching application:", id);
 
-            const app = await window.api.getApplicationById(id);
-            if (!app) {
-                alert('Application not found.');
-                return;
-            }
+      const app = await window.api.getApplication(id);
+      if (!app) {
+        alert("Application not found.");
+        return;
+      }
 
-        // Store current app ID for status updates
-        window.currentAppId = id;
+      // Store current app ID for status updates
+      window.currentAppId = id;
 
-        const modalBody = document.getElementById('modalBody');
-        modalBody.innerHTML = `
+      const modalBody = document.getElementById("modalBody");
+      modalBody.innerHTML = `
             <div class="detail-section">
                 <h3>Applicant Information</h3>
                 <div class="detail-grid">
                     <div class="detail-item">
                         <p class="detail-label">Full Name</p>
-                        <p class="detail-value">${app.applicant?.fullName || 'N/A'}</p>
+                        <p class="detail-value">${
+                          app.applicant?.fullName || "N/A"
+                        }</p>
                     </div>
                     <div class="detail-item">
                         <p class="detail-label">Email</p>
-                        <p class="detail-value">${app.applicant?.email || 'N/A'}</p>
+                        <p class="detail-value">${
+                          app.applicant?.email || "N/A"
+                        }</p>
                     </div>
                     <div class="detail-item">
                         <p class="detail-label">Phone</p>
-                        <p class="detail-value">${app.applicant?.phone || 'N/A'}</p>
+                        <p class="detail-value">${
+                          app.applicant?.phone || "N/A"
+                        }</p>
                     </div>
                     <div class="detail-item">
                         <p class="detail-label">WhatsApp</p>
-                        <p class="detail-value">${app.applicant?.whatsapp || 'N/A'}</p>
+                        <p class="detail-value">${
+                          app.applicant?.whatsapp || "N/A"
+                        }</p>
                     </div>
                     <div class="detail-item">
                         <p class="detail-label">Nationality</p>
-                        <p class="detail-value">${app.applicant?.nationality || 'N/A'}</p>
+                        <p class="detail-value">${
+                          app.applicant?.nationality || "N/A"
+                        }</p>
                     </div>
                     <div class="detail-item">
                         <p class="detail-label">Date of Birth</p>
-                        <p class="detail-value">${app.applicant?.dateOfBirth || 'N/A'}</p>
+                        <p class="detail-value">${
+                          app.applicant?.dateOfBirth || "N/A"
+                        }</p>
                     </div>
                 </div>
             </div>
@@ -256,27 +295,39 @@ document.addEventListener('DOMContentLoaded', () => {
                 <div class="detail-grid">
                     <div class="detail-item">
                         <p class="detail-label">Business Name</p>
-                        <p class="detail-value">${app.business?.name || 'N/A'}</p>
+                        <p class="detail-value">${
+                          app.business?.name || "N/A"
+                        }</p>
                     </div>
                     <div class="detail-item">
                         <p class="detail-label">Registration Number</p>
-                        <p class="detail-value">${app.business?.regNumber || 'N/A'}</p>
+                        <p class="detail-value">${
+                          app.business?.regNumber || "N/A"
+                        }</p>
                     </div>
                     <div class="detail-item">
                         <p class="detail-label">Entity Type</p>
-                        <p class="detail-value">${app.business?.entity?.replace('_', ' ') || 'N/A'}</p>
+                        <p class="detail-value">${
+                          app.business?.entity?.replace("_", " ") || "N/A"
+                        }</p>
                     </div>
                     <div class="detail-item">
                         <p class="detail-label">Industry</p>
-                        <p class="detail-value">${app.business?.industry || 'N/A'}</p>
+                        <p class="detail-value">${
+                          app.business?.industry || "N/A"
+                        }</p>
                     </div>
                     <div class="detail-item">
                         <p class="detail-label">TIN</p>
-                        <p class="detail-value">${app.business?.tin || 'N/A'}</p>
+                        <p class="detail-value">${
+                          app.business?.tin || "N/A"
+                        }</p>
                     </div>
                     <div class="detail-item">
                         <p class="detail-label">Established</p>
-                        <p class="detail-value">${app.business?.established || 'N/A'}</p>
+                        <p class="detail-value">${
+                          app.business?.established || "N/A"
+                        }</p>
                     </div>
                 </div>
             </div>
@@ -286,19 +337,27 @@ document.addEventListener('DOMContentLoaded', () => {
                 <div class="detail-grid">
                     <div class="detail-item">
                         <p class="detail-label">Loan Amount</p>
-                        <p class="detail-value">$${parseFloat(app.loan?.amount || 0).toLocaleString()}</p>
+                        <p class="detail-value">$${parseFloat(
+                          app.loan?.amount || 0
+                        ).toLocaleString()}</p>
                     </div>
                     <div class="detail-item">
                         <p class="detail-label">Purpose</p>
-                        <p class="detail-value">${app.loan?.purpose?.replace('_', ' ') || 'N/A'}</p>
+                        <p class="detail-value">${
+                          app.loan?.purpose?.replace("_", " ") || "N/A"
+                        }</p>
                     </div>
                     <div class="detail-item">
                         <p class="detail-label">Term</p>
-                        <p class="detail-value">${app.loan?.term || 'N/A'} months</p>
+                        <p class="detail-value">${
+                          app.loan?.term || "N/A"
+                        } months</p>
                     </div>
                     <div class="detail-item">
                         <p class="detail-label">Start Date</p>
-                        <p class="detail-value">${app.loan?.startDate || 'N/A'}</p>
+                        <p class="detail-value">${
+                          app.loan?.startDate || "N/A"
+                        }</p>
                     </div>
                 </div>
             </div>
@@ -308,19 +367,27 @@ document.addEventListener('DOMContentLoaded', () => {
                 <div class="detail-grid">
                     <div class="detail-item">
                         <p class="detail-label">Annual Revenue</p>
-                        <p class="detail-value">$${parseFloat(app.financial?.annualRevenue || 0).toLocaleString()}</p>
+                        <p class="detail-value">$${parseFloat(
+                          app.financial?.annualRevenue || 0
+                        ).toLocaleString()}</p>
                     </div>
                     <div class="detail-item">
                         <p class="detail-label">Monthly Sales</p>
-                        <p class="detail-value">$${parseFloat(app.financial?.monthlySales || 0).toLocaleString()}</p>
+                        <p class="detail-value">$${parseFloat(
+                          app.financial?.monthlySales || 0
+                        ).toLocaleString()}</p>
                     </div>
                     <div class="detail-item">
                         <p class="detail-label">Monthly Expenses</p>
-                        <p class="detail-value">$${parseFloat(app.financial?.monthlyExpenses || 0).toLocaleString()}</p>
+                        <p class="detail-value">$${parseFloat(
+                          app.financial?.monthlyExpenses || 0
+                        ).toLocaleString()}</p>
                     </div>
                     <div class="detail-item">
                         <p class="detail-label">Existing Loans</p>
-                        <p class="detail-value">${app.financial?.existingLoans || 'N/A'}</p>
+                        <p class="detail-value">${
+                          app.financial?.existingLoans || "N/A"
+                        }</p>
                     </div>
                 </div>
             </div>
@@ -330,273 +397,306 @@ document.addEventListener('DOMContentLoaded', () => {
                 <div class="detail-grid">
                     <div class="detail-item">
                         <p class="detail-label">ID Document</p>
-                        <p class="detail-value">${app.documents?.idDocument || 'Not uploaded'}</p>
+                        <p class="detail-value">${
+                          app.documents?.idDocument || "Not uploaded"
+                        }</p>
                     </div>
                     <div class="detail-item">
                         <p class="detail-label">Business Docs</p>
-                        <p class="detail-value">${app.documents?.businessDocs?.length || 0} file(s)</p>
+                        <p class="detail-value">${
+                          app.documents?.businessDocs?.length || 0
+                        } file(s)</p>
                     </div>
                     <div class="detail-item">
                         <p class="detail-label">Bank Statements</p>
-                        <p class="detail-value">${app.documents?.bankStatements?.length || 0} file(s)</p>
+                        <p class="detail-value">${
+                          app.documents?.bankStatements?.length || 0
+                        } file(s)</p>
                     </div>
                 </div>
             </div>
         `;
 
-        document.getElementById('appModal').classList.remove('hidden');
-
-        } catch (error) {
-            console.error('Error viewing applications details:', error);
-            alert('Failed to load application details. Please try again.');
-        }    
-    };
-
-    // CLOSE MODAL    
-    window.closeModal = function() {
-        document.getElementById('appModal').classList.add('hidden');
-    };
-
-    // UPDATE APPLICATION STATUS
-    window.updateStatus = async function(newStatus) {
-        if (!window.currentAppId) return;
-
-        try {
-            console.log('updating status:', window.currentAppId, newStatus);
-            
-            const result = await window.api.updateStatus(window.currentAppId, newStatus);
-
-            if (result.success) {
-                closeModal();
-                loadDashboardData();
-                loadAllApplications();
-
-                alert(`Application ${newStatus.toLowerCase()} successfully!`);
-            } else {
-                throw new Error('Failed to update status');
-            }
-
-        } catch (error) {
-            console.error('Error updating status:', error);
-            alert('Failed to update status. Please try again.');
-        }
-    };
-
-    // SEARCH & FILTER WITH BACKEND DATA
-    const searchInput = document.getElementById('searchInput');
-    const statusFilter = document.getElementById('statusFilter');
-
-    if (searchInput) {
-        searchInput.addEventListener('input', filterApplications);
+      document.getElementById("appModal").classList.remove("hidden");
+    } catch (error) {
+      console.error("Error viewing applications details:", error);
+      alert("Failed to load application details. Please try again.");
     }
+  };
 
-    if (statusFilter) {
-        statusFilter.addEventListener('change', filterApplications);
+  // CLOSE MODAL
+  window.closeModal = function () {
+    document.getElementById("appModal").classList.add("hidden");
+  };
+
+  // UPDATE APPLICATION STATUS
+  window.updateStatus = async function (newStatus) {
+    if (!window.currentAppId) return;
+
+    try {
+      console.log("updating status:", window.currentAppId, newStatus);
+
+      const result = await window.api.updateStatus(
+        window.currentAppId,
+        newStatus
+      );
+
+      if (result.success) {
+        closeModal();
+        loadDashboardData();
+        loadAllApplications();
+
+        alert(`Application ${newStatus.toLowerCase()} successfully!`);
+      } else {
+        throw new Error("Failed to update status");
+      }
+    } catch (error) {
+      console.error("Error updating status:", error);
+      alert("Failed to update status. Please try again.");
     }
+  };
 
-    async function filterApplications() {
-        try {
-            const searchTerm = searchInput?.value.toLowerCase() || '';
-            const statusValue = statusFilter?.value || '';
-            
-            const applications = await window.api.getAllApplications();
-        
-            const filtered = applications.filter(app => {
-                const matchesSearch = !searchTerm || 
-                    app.applicant?.fullName?.toLowerCase().includes(searchTerm) ||
-                    app.business?.name?.toLowerCase().includes(searchTerm) ||
-                    app.id.toLowerCase().includes(searchTerm);
-            
-                const matchesStatus = !statusValue || app.status === statusValue;
-            
-                return matchesSearch && matchesStatus;
-            });
+  // SEARCH & FILTER WITH BACKEND DATA
+  const searchInput = document.getElementById("searchInput");
+  const statusFilter = document.getElementById("statusFilter");
 
-            const tbody = document.getElementById('applicationsBody');
-            if (!tbody) return;
+  if (searchInput) {
+    searchInput.addEventListener("input", filterApplications);
+  }
 
-            if (filtered.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="9" class="empty-state">No matching applications found</td></tr>';
-                return;
-            }
+  if (statusFilter) {
+    statusFilter.addEventListener("change", filterApplications);
+  }
 
-        tbody.innerHTML = filtered.map(app => `
+  async function filterApplications() {
+    try {
+      const searchTerm = searchInput?.value.toLowerCase() || "";
+      const statusValue = statusFilter?.value || "";
+
+      const applications = await window.api.getAllApplications();
+
+      const filtered = applications.filter((app) => {
+        const matchesSearch =
+          !searchTerm ||
+          app.applicant?.fullName?.toLowerCase().includes(searchTerm) ||
+          app.business?.name?.toLowerCase().includes(searchTerm) ||
+          app.id.toLowerCase().includes(searchTerm);
+
+        const matchesStatus = !statusValue || app.status === statusValue;
+
+        return matchesSearch && matchesStatus;
+      });
+
+      const tbody = document.getElementById("applicationsBody");
+      if (!tbody) return;
+
+      if (filtered.length === 0) {
+        tbody.innerHTML =
+          '<tr><td colspan="9" class="empty-state">No matching applications found</td></tr>';
+        return;
+      }
+
+      tbody.innerHTML = filtered
+        .map(
+          (app) => `
             <tr>
-                <td><input type="checkbox" class="app-checkbox" data-id="${app.id}"></td>
+                <td><input type="checkbox" class="app-checkbox" data-id="${
+                  app.id
+                }"></td>
                 <td><strong>${app.id}</strong></td>
-                <td>${app.applicant?.fullName || 'N/A'}</td>
-                <td>${app.business?.name || 'N/A'}</td>
-                <td><strong>$${parseFloat(app.loan?.amount || 0).toLocaleString()}</strong></td>
-                <td class="capitalize">${app.loan?.purpose?.replace('_', ' ') || 'N/A'}</td>
+                <td>${app.applicant?.fullName || "N/A"}</td>
+                <td>${app.business?.name || "N/A"}</td>
+                <td><strong>$${parseFloat(
+                  app.loan?.amount || 0
+                ).toLocaleString()}</strong></td>
+                <td class="capitalize">${
+                  app.loan?.purpose?.replace("_", " ") || "N/A"
+                }</td>
                 <td>${getStatusBadge(app.status)}</td>
                 <td>${new Date(app.submittedAt).toLocaleDateString()}</td>
                 <td>
                     <div class="action-buttons">
-                        <button class="action-btn action-btn-primary" onclick="viewApplication('${app.id}')">View</button>
+                        <button class="action-btn action-btn-primary" onclick="viewApplication('${
+                          app.id
+                        }')">View</button>
                     </div>
                 </td>
             </tr>
-        `).join('');
+        `
+        )
+        .join("");
     } catch (error) {
-        console.log('Error filtering applications:', error);    
+      console.log("Error filtering applications:", error);
     }
-}        
+  }
 
-    //EXPORT FUNCTIONS AND WORKS WITH BACKEND DATA
-    window.exportToCSV = async function() {
-        try {
-            const applications = await window.api.getAllApplications();
-        
-            const headers = ['Application ID', 'Name', 'Email', 'Business', 'Loan Amount', 'Purpose', 'Status', 'Date'];
-            const rows = applications.map(app => [
-                app.id,
-                app.applicant?.fullName || '',
-                app.applicant?.email || '',
-                app.business?.name || '',
-                app.loan?.amount || '',
-                app.loan?.purpose || '',
-                app.status,
-                new Date(app.submittedAt).toLocaleDateString()
-            ]);
-
-        let csv = [headers.join(',')];
-        rows.forEach(row => {
-            csv.push(row.map(cell => `"${cell}"`).join(','));
-        });
-
-        const blob = new Blob([csv.join('\n')], { type: 'text/csv' });
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = `applications_${Date.now()}.csv`;
-        a.click();
-        URL.revokeObjectURL(url);
-    
-    } catch (error) {
-        console.error('Error exporting to CSV:', error);
-        alert('Failed to export data. Please try again.');
-    }
-};
-
-window.exportToExcel = async function() {
+  //EXPORT FUNCTIONS AND WORKS WITH BACKEND DATA
+  window.exportToCSV = async function () {
     try {
-        const applications = await window.api.getAllApplications();
-        
-        const data = applications.map(app => ({
-            'Application ID': app.id,
-            'Name': app.applicant?.fullName || '',
-            'Email': app.applicant?.email || '',
-            'Phone': app.applicant?.phone || '',
-            'Business': app.business?.name || '',
-            'Loan Amount': app.loan?.amount || '',
-            'Purpose': app.loan?.purpose || '',
-            'Term': app.loan?.term || '',
-            'Status': app.status,
-            'Date': new Date(app.submittedAt).toLocaleDateString()
-        }));
+      const applications = await window.api.getAllApplications();
 
-        const ws = XLSX.utils.json_to_sheet(data);
-        const wb = XLSX.utils.book_new();
-        XLSX.utils.book_append_sheet(wb, ws, 'Applications');
-        XLSX.writeFile(wb, `applications_${Date.now()}.xlsx`);
+      const headers = [
+        "Application ID",
+        "Name",
+        "Email",
+        "Business",
+        "Loan Amount",
+        "Purpose",
+        "Status",
+        "Date",
+      ];
+      const rows = applications.map((app) => [
+        app.id,
+        app.applicant?.fullName || "",
+        app.applicant?.email || "",
+        app.business?.name || "",
+        app.loan?.amount || "",
+        app.loan?.purpose || "",
+        app.status,
+        new Date(app.submittedAt).toLocaleDateString(),
+      ]);
+
+      let csv = [headers.join(",")];
+      rows.forEach((row) => {
+        csv.push(row.map((cell) => `"${cell}"`).join(","));
+      });
+
+      const blob = new Blob([csv.join("\n")], { type: "text/csv" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `applications_${Date.now()}.csv`;
+      a.click();
+      URL.revokeObjectURL(url);
     } catch (error) {
-        console.error('Error exporting Excel:', error);
-        alert('Failed to export data. Please try again.');
-    }    
-};
-window.exportToPDF = async function() {
-    try {
-        const { jsPDF } = window.jspdf;
-        const doc = new jsPDF();
-        
-        const applications = await window.api.getAllApplications();
-        
-        const tableData = applications.map(app => [
-            app.id,
-            app.applicant?.fullName || '',
-            app.business?.name || '',
-            `$${parseFloat(app.loan?.amount || 0).toLocaleString()}`,
-            app.status,
-            new Date(app.submittedAt).toLocaleDateString()
-        ]);
-
-        doc.setFontSize(18);
-        doc.text('Loan Applications Report', 14, 20);
-        
-        doc.setFontSize(11);
-        doc.text(`Generated: ${new Date().toLocaleString()}`, 14, 30);
-
-        doc.autoTable({
-            head: [['ID', 'Name', 'Business', 'Amount', 'Status', 'Date']],
-            body: tableData,
-            startY: 40
-        });
-
-        doc.save(`applications_${Date.now()}.pdf`);
-    } catch (error) {
-        console.error('Error exporting PDF:', error);
-        alert('Failed to export data. Please try again.');
+      console.error("Error exporting to CSV:", error);
+      alert("Failed to export data. Please try again.");
     }
-};
+  };
 
-    // REFRESH DATA
-    const refreshBtn = document.getElementById('refreshData');
-    if (refreshBtn) {
-        refreshBtn.addEventListener('click', async () => {
-            try {
-            await loadDashboardData();
-            await loadAllApplications();
-            alert('Data refreshed successfully!');
-        } catch (error) {
-            console.error('Error refreshing data:', error);
-            alert('Failed to refresh data. Please try again.');
-        }
+  window.exportToExcel = async function () {
+    try {
+      const applications = await window.api.getAllApplications();
+
+      const data = applications.map((app) => ({
+        "Application ID": app.id,
+        Name: app.applicant?.fullName || "",
+        Email: app.applicant?.email || "",
+        Phone: app.applicant?.phone || "",
+        Business: app.business?.name || "",
+        "Loan Amount": app.loan?.amount || "",
+        Purpose: app.loan?.purpose || "",
+        Term: app.loan?.term || "",
+        Status: app.status,
+        Date: new Date(app.submittedAt).toLocaleDateString(),
+      }));
+
+      const ws = XLSX.utils.json_to_sheet(data);
+      const wb = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(wb, ws, "Applications");
+      XLSX.writeFile(wb, `applications_${Date.now()}.xlsx`);
+    } catch (error) {
+      console.error("Error exporting Excel:", error);
+      alert("Failed to export data. Please try again.");
+    }
+  };
+  window.exportToPDF = async function () {
+    try {
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF();
+
+      const applications = await window.api.getAllApplications();
+
+      const tableData = applications.map((app) => [
+        app.id,
+        app.applicant?.fullName || "",
+        app.business?.name || "",
+        `$${parseFloat(app.loan?.amount || 0).toLocaleString()}`,
+        app.status,
+        new Date(app.submittedAt).toLocaleDateString(),
+      ]);
+
+      doc.setFontSize(18);
+      doc.text("Loan Applications Report", 14, 20);
+
+      doc.setFontSize(11);
+      doc.text(`Generated: ${new Date().toLocaleString()}`, 14, 30);
+
+      doc.autoTable({
+        head: [["ID", "Name", "Business", "Amount", "Status", "Date"]],
+        body: tableData,
+        startY: 40,
+      });
+
+      doc.save(`applications_${Date.now()}.pdf`);
+    } catch (error) {
+      console.error("Error exporting PDF:", error);
+      alert("Failed to export data. Please try again.");
+    }
+  };
+
+  // REFRESH DATA
+  const refreshBtn = document.getElementById("refreshData");
+  if (refreshBtn) {
+    refreshBtn.addEventListener("click", async () => {
+      try {
+        await loadDashboardData();
+        await loadAllApplications();
+        alert("Data refreshed successfully!");
+      } catch (error) {
+        console.error("Error refreshing data:", error);
+        alert("Failed to refresh data. Please try again.");
+      }
     });
-}
+  }
 
-    /*SETTINGS FUNCTIONS*/
-    window.clearAllData =  async function() {
-        if (confirm('Are you sure you want to clear all application data? This action cannot be undone.')) {
-            alert('This fearure requires backend implementation.');
-        }
-    };
-
-    window.exportAllData = async function() {
-        try {
-            const applications = await window.api.getAllApplications();
-            const dataStr = JSON.stringify(applications, null, 2);
-            const blob = new Blob([dataStr], { type: 'application/json' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = `backup_${Date.now()}.json`;
-            a.click();
-            URL.revokeObjectURL(url);
-        } catch (error) {
-            console.error('Error exporting all data:', error);
-            alert('Failed to export data. Please try again.');
-        }
-    };
-
-    //ANALYTICS (PLACEHOLDER)
-    function loadAnalytics() {
-        // This would typically load chart data
-        // For now, just a placeholder
-        console.log('Analytics loaded');
+  /*SETTINGS FUNCTIONS*/
+  window.clearAllData = async function () {
+    if (
+      confirm(
+        "Are you sure you want to clear all application data? This action cannot be undone."
+      )
+    ) {
+      alert("This fearure requires backend implementation.");
     }
+  };
 
-    // SELECT ALL CHECKBOX
-    const selectAllCheckbox = document.getElementById('selectAll');
-    if (selectAllCheckbox) {
-        selectAllCheckbox.addEventListener('change', (e) => {
-            document.querySelectorAll('.app-checkbox').forEach(checkbox => {
-                checkbox.checked = e.target.checked;
-            });
-        });
+  window.exportAllData = async function () {
+    try {
+      const applications = await window.api.getAllApplications();
+      const dataStr = JSON.stringify(applications, null, 2);
+      const blob = new Blob([dataStr], { type: "application/json" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `backup_${Date.now()}.json`;
+      a.click();
+      URL.revokeObjectURL(url);
+    } catch (error) {
+      console.error("Error exporting all data:", error);
+      alert("Failed to export data. Please try again.");
     }
+  };
 
-    // Initialize dashboard if logged in
-    if (sessionStorage.getItem('adminLoggedIn')) {
-        loadDashboardData();
-    }
+  //ANALYTICS (PLACEHOLDER)
+  function loadAnalytics() {
+    // This would typically load chart data
+    // For now, just a placeholder
+    console.log("Analytics loaded");
+  }
+
+  // SELECT ALL CHECKBOX
+  const selectAllCheckbox = document.getElementById("selectAll");
+  if (selectAllCheckbox) {
+    selectAllCheckbox.addEventListener("change", (e) => {
+      document.querySelectorAll(".app-checkbox").forEach((checkbox) => {
+        checkbox.checked = e.target.checked;
+      });
+    });
+  }
+
+  // Initialize dashboard if logged in
+  if (sessionStorage.getItem("adminLoggedIn")) {
+    loadDashboardData();
+  }
 });
