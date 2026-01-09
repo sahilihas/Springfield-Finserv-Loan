@@ -1,9 +1,7 @@
 console.log("script.js loaded");
 document.addEventListener('DOMContentLoaded', () => {
 
-  /* ===================================
-     DARK MODE FUNCTIONALITY
-  =================================== */
+  /*DARK MODE FUNCTIONALITY*/
   const darkModeToggle = document.getElementById('darkModeToggle');
   const htmlElement = document.documentElement;
 
@@ -54,9 +52,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 });
 
-   // ===================================
-    // FAQ ACCORDION
-    // ===================================
+   /*FAQ ACCORDION*/
     const faqItems = document.querySelectorAll('.faq-item');
     
     faqItems.forEach(item => {
@@ -77,9 +73,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
     
-  /* ===================================
-     SMOOTH SCROLLING
-  =================================== */
+  /*SMOOTH SCROLLING*/
   document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
       const href = this.getAttribute('href');
@@ -95,9 +89,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   
 
-  /* ===================================
-     LOAN CALCULATOR
-  =================================== */
+  /*LOAN CALCULATOR */
   const amountSlider = document.getElementById('loan-amount');
   const termSlider = document.getElementById('loan-term');
   const amountLabel = document.getElementById('amount-label');
@@ -138,9 +130,7 @@ document.addEventListener('DOMContentLoaded', () => {
   termSlider && termSlider.addEventListener('input', updateCalculator);
   updateCalculator();
 
-  /* ===================================
-     CONTACT FORM
-  =================================== */
+  /*CONTACT FORM*/
   const contactForm = document.getElementById('contact-form');
   const formSuccess = document.getElementById('form-success');
 
@@ -156,9 +146,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  /* ===================================
-     ACTIVE NAV LINK
-  =================================== */
+  /*ACTIVE NAV LINK*/
   const currentPage =
     window.location.pathname.split('/').pop() || 'index.html';
 
@@ -168,9 +156,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  /* ===================================
-     SCROLL TO TOP BUTTON
-  =================================== */
+  /*SCROLL TO TOP BUTTON*/
   let scrollBtn = document.getElementById('scrollToTop');
 
   if (!scrollBtn && document.body.scrollHeight > window.innerHeight * 2) {

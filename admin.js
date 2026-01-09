@@ -1,5 +1,4 @@
 console.log("admin.js loaded");
-
 //ADMIN AUTHENTICATION
 document.addEventListener('DOMContentLoaded', () => {
     const loginOverlay = document.getElementById('login-overlay');
@@ -96,11 +95,16 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
-    // LOAD DASHBOARD DATA
+    // LOAD DASHBOARD DATA FROM BACKEND
 
-    function loadDashboardData() {
-        const applications = JSON.parse(sessionStorage.getItem('loanApplications') || '[]');
-        
+    async function loadDashboardData() {
+        try {
+            console.log('Loading dashboard data from backend...');
+
+            // Fetch all applications from backend
+            const applications = await window.api.getAllApplications();
+            console.log('Fetched applications:', applications);
+
         // Update stats
         document.getElementById('total-applications').textContent = applications.length;
         document.getElementById('app-count').textContent = applications.length;
@@ -118,8 +122,14 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('total-capital').textContent = `$${(totalCapital / 1000000).toFixed(2)}M`;
         
         // Load recent applications (last 5)
-        loadRecentApplications(applications.slice(-5).reverse());
-    }
+        const recentApps = applications.slice(0, -5);
+        loadRecentApplications(recentApps);
+
+    } catch (error) {
+        console.error('Error loading dashboard data:', error);
+        alert('Failed to load dashboard data. Please refresh the page.');
+     }
+}
 
     // LOAD RECENT APPLICATIONS
     function loadRecentApplications(applications) {
@@ -143,13 +153,17 @@ document.addEventListener('DOMContentLoaded', () => {
         `).join('');
     }
 
-    // LOAD ALL APPLICATIONS
-    function loadAllApplications() {
-        const applications = JSON.parse(sessionStorage.getItem('loanApplications') || '[]');
-        const tbody = document.getElementById('applicationsBody');
-        if (!tbody) return;
+    // LOAD ALL APPLICATIONS FROM BACKEND
+    async function loadAllApplications() {
+        try {
+            console.log('Loading all applications from backend...');
 
-        if (applications.length === 0) {
+            const applications = await window.api.getAllApplications();
+            const tbody = document.getElementById('applicationsBody');
+      
+            if (!tbody) return;
+
+            if (applications.length === 0) {
             tbody.innerHTML = '<tr><td colspan="9" class="empty-state">No applications found</td></tr>';
             return;
         }
@@ -171,8 +185,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 </td>
             </tr>
         `).join('');
-    }
 
+        } catch (error) {
+            console.error('Error loading all applications:', error);
+            alert("failed to load applications. please refresh the page.");
+        }
+    }
     window.loadAllApplications = loadAllApplications;
 
     // STATUS BADGE
@@ -188,11 +206,15 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // VIEW APPLICATION DETAILS
-    window.viewApplication = function(id) {
-        const applications = JSON.parse(sessionStorage.getItem('loanApplications') || '[]');
-        const app = applications.find(a => a.id === id);
-        
-        if (!app) return;
+    window.viewApplication = async function(id) {
+        try {
+            console.log('Fetching application:', id);
+
+            const app = await window.api.getApplicationById(id);
+            if (!app) {
+                alert('Application not found.');
+                return;
+            }
 
         // Store current app ID for status updates
         window.currentAppId = id;
@@ -323,32 +345,44 @@ document.addEventListener('DOMContentLoaded', () => {
         `;
 
         document.getElementById('appModal').classList.remove('hidden');
+
+        } catch (error) {
+            console.error('Error viewing applications details:', error);
+            alert('Failed to load application details. Please try again.');
+        }    
     };
 
+    // CLOSE MODAL    
     window.closeModal = function() {
         document.getElementById('appModal').classList.add('hidden');
     };
 
     // UPDATE APPLICATION STATUS
-    window.updateStatus = function(newStatus) {
+    window.updateStatus = async function(newStatus) {
         if (!window.currentAppId) return;
 
-        const applications = JSON.parse(sessionStorage.getItem('loanApplications') || '[]');
-        const appIndex = applications.findIndex(a => a.id === window.currentAppId);
-        
-        if (appIndex !== -1) {
-            applications[appIndex].status = newStatus;
-            sessionStorage.setItem('loanApplications', JSON.stringify(applications));
+        try {
+            console.log('updating status:', window.currentAppId, newStatus);
             
-            closeModal();
-            loadDashboardData();
-            loadAllApplications();
-            
-            alert(`Application ${newStatus.toLowerCase()} successfully!`);
+            const result = await window.api.updateStatus(window.currentAppId, newStatus);
+
+            if (result.success) {
+                closeModal();
+                loadDashboardData();
+                loadAllApplications();
+
+                alert(`Application ${newStatus.toLowerCase()} successfully!`);
+            } else {
+                throw new Error('Failed to update status');
+            }
+
+        } catch (error) {
+            console.error('Error updating status:', error);
+            alert('Failed to update status. Please try again.');
         }
     };
 
-    // SEARCH & FILTER
+    // SEARCH & FILTER WITH BACKEND DATA
     const searchInput = document.getElementById('searchInput');
     const statusFilter = document.getElementById('statusFilter');
 
@@ -360,30 +394,31 @@ document.addEventListener('DOMContentLoaded', () => {
         statusFilter.addEventListener('change', filterApplications);
     }
 
-    function filterApplications() {
-        const searchTerm = searchInput?.value.toLowerCase() || '';
-        const statusValue = statusFilter?.value || '';
-        
-        const applications = JSON.parse(sessionStorage.getItem('loanApplications') || '[]');
-        
-        const filtered = applications.filter(app => {
-            const matchesSearch = !searchTerm || 
-                app.applicant?.fullName?.toLowerCase().includes(searchTerm) ||
-                app.business?.name?.toLowerCase().includes(searchTerm) ||
-                app.id.toLowerCase().includes(searchTerm);
+    async function filterApplications() {
+        try {
+            const searchTerm = searchInput?.value.toLowerCase() || '';
+            const statusValue = statusFilter?.value || '';
             
-            const matchesStatus = !statusValue || app.status === statusValue;
+            const applications = await window.api.getAllApplications();
+        
+            const filtered = applications.filter(app => {
+                const matchesSearch = !searchTerm || 
+                    app.applicant?.fullName?.toLowerCase().includes(searchTerm) ||
+                    app.business?.name?.toLowerCase().includes(searchTerm) ||
+                    app.id.toLowerCase().includes(searchTerm);
             
-            return matchesSearch && matchesStatus;
-        });
+                const matchesStatus = !statusValue || app.status === statusValue;
+            
+                return matchesSearch && matchesStatus;
+            });
 
-        const tbody = document.getElementById('applicationsBody');
-        if (!tbody) return;
+            const tbody = document.getElementById('applicationsBody');
+            if (!tbody) return;
 
-        if (filtered.length === 0) {
-            tbody.innerHTML = '<tr><td colspan="9" class="empty-state">No matching applications found</td></tr>';
-            return;
-        }
+            if (filtered.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="9" class="empty-state">No matching applications found</td></tr>';
+                return;
+            }
 
         tbody.innerHTML = filtered.map(app => `
             <tr>
@@ -402,23 +437,27 @@ document.addEventListener('DOMContentLoaded', () => {
                 </td>
             </tr>
         `).join('');
+    } catch (error) {
+        console.log('Error filtering applications:', error);    
     }
+}        
 
-    //EXPORT FUNCTIONS
-    window.exportToCSV = function() {
-        const applications = JSON.parse(sessionStorage.getItem('loanApplications') || '[]');
+    //EXPORT FUNCTIONS AND WORKS WITH BACKEND DATA
+    window.exportToCSV = async function() {
+        try {
+            const applications = await window.api.getAllApplications();
         
-        const headers = ['Application ID', 'Name', 'Email', 'Business', 'Loan Amount', 'Purpose', 'Status', 'Date'];
-        const rows = applications.map(app => [
-            app.id,
-            app.applicant?.fullName || '',
-            app.applicant?.email || '',
-            app.business?.name || '',
-            app.loan?.amount || '',
-            app.loan?.purpose || '',
-            app.status,
-            new Date(app.submittedAt).toLocaleDateString()
-        ]);
+            const headers = ['Application ID', 'Name', 'Email', 'Business', 'Loan Amount', 'Purpose', 'Status', 'Date'];
+            const rows = applications.map(app => [
+                app.id,
+                app.applicant?.fullName || '',
+                app.applicant?.email || '',
+                app.business?.name || '',
+                app.loan?.amount || '',
+                app.loan?.purpose || '',
+                app.status,
+                new Date(app.submittedAt).toLocaleDateString()
+            ]);
 
         let csv = [headers.join(',')];
         rows.forEach(row => {
@@ -432,10 +471,16 @@ document.addEventListener('DOMContentLoaded', () => {
         a.download = `applications_${Date.now()}.csv`;
         a.click();
         URL.revokeObjectURL(url);
-    };
+    
+    } catch (error) {
+        console.error('Error exporting to CSV:', error);
+        alert('Failed to export data. Please try again.');
+    }
+};
 
-    window.exportToExcel = function() {
-        const applications = JSON.parse(sessionStorage.getItem('loanApplications') || '[]');
+window.exportToExcel = async function() {
+    try {
+        const applications = await window.api.getAllApplications();
         
         const data = applications.map(app => ({
             'Application ID': app.id,
@@ -454,13 +499,17 @@ document.addEventListener('DOMContentLoaded', () => {
         const wb = XLSX.utils.book_new();
         XLSX.utils.book_append_sheet(wb, ws, 'Applications');
         XLSX.writeFile(wb, `applications_${Date.now()}.xlsx`);
-    };
-
-    window.exportToPDF = function() {
+    } catch (error) {
+        console.error('Error exporting Excel:', error);
+        alert('Failed to export data. Please try again.');
+    }    
+};
+window.exportToPDF = async function() {
+    try {
         const { jsPDF } = window.jspdf;
         const doc = new jsPDF();
         
-        const applications = JSON.parse(sessionStorage.getItem('loanApplications') || '[]');
+        const applications = await window.api.getAllApplications();
         
         const tableData = applications.map(app => [
             app.id,
@@ -484,56 +533,59 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         doc.save(`applications_${Date.now()}.pdf`);
-    };
+    } catch (error) {
+        console.error('Error exporting PDF:', error);
+        alert('Failed to export data. Please try again.');
+    }
+};
 
-    // ===================================
     // REFRESH DATA
-    // ===================================
     const refreshBtn = document.getElementById('refreshData');
     if (refreshBtn) {
-        refreshBtn.addEventListener('click', () => {
-            loadDashboardData();
-            loadAllApplications();
+        refreshBtn.addEventListener('click', async () => {
+            try {
+            await loadDashboardData();
+            await loadAllApplications();
             alert('Data refreshed successfully!');
-        });
-    }
+        } catch (error) {
+            console.error('Error refreshing data:', error);
+            alert('Failed to refresh data. Please try again.');
+        }
+    });
+}
 
-    // ===================================
-    // SETTINGS FUNCTIONS
-    // ===================================
-    window.clearAllData = function() {
+    /*SETTINGS FUNCTIONS*/
+    window.clearAllData =  async function() {
         if (confirm('Are you sure you want to clear all application data? This action cannot be undone.')) {
-            sessionStorage.removeItem('loanApplications');
-            loadDashboardData();
-            loadAllApplications();
-            alert('All data has been cleared.');
+            alert('This fearure requires backend implementation.');
         }
     };
 
-    window.exportAllData = function() {
-        const applications = JSON.parse(sessionStorage.getItem('loanApplications') || '[]');
-        const dataStr = JSON.stringify(applications, null, 2);
-        const blob = new Blob([dataStr], { type: 'application/json' });
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = `backup_${Date.now()}.json`;
-        a.click();
-        URL.revokeObjectURL(url);
+    window.exportAllData = async function() {
+        try {
+            const applications = await window.api.getAllApplications();
+            const dataStr = JSON.stringify(applications, null, 2);
+            const blob = new Blob([dataStr], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `backup_${Date.now()}.json`;
+            a.click();
+            URL.revokeObjectURL(url);
+        } catch (error) {
+            console.error('Error exporting all data:', error);
+            alert('Failed to export data. Please try again.');
+        }
     };
 
-    // ===================================
-    // ANALYTICS (PLACEHOLDER)
-    // ===================================
+    //ANALYTICS (PLACEHOLDER)
     function loadAnalytics() {
         // This would typically load chart data
         // For now, just a placeholder
         console.log('Analytics loaded');
     }
 
-    // ===================================
     // SELECT ALL CHECKBOX
-    // ===================================
     const selectAllCheckbox = document.getElementById('selectAll');
     if (selectAllCheckbox) {
         selectAllCheckbox.addEventListener('change', (e) => {

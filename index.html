@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,31 +8,25 @@
     <link rel="stylesheet" href="styles.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
 </head>
+
 <body>
-    <!-- Header -->
     <header class="header">
-    <div class="header-container">
-        <a href="index.html" class="logo" aria-label="Springfield Financial Home">
-            <div class="logo-icon"
-           style="background-color:#003366; width:32px; height:32px; border-radius:8px; display:flex; align-items:center; justify-content:center;">
-            <svg viewBox="0 0 100 100"
-             width="20"
-             height="20"
-             fill="none"
-             stroke="currentColor"
-             stroke-width="6"
-             stroke-linecap="round"
-             stroke-linejoin="round"
-             style="color:white;">
-             <path d="M20 45 L50 20 L80 45 V80 H20 Z" />
-             <path d="M35 80 V60 H45 V80" fill="white" stroke="none" />
-             <path d="M55 80 V50 H65 V80" fill="white" stroke="none" />
-            </svg>
-        </div>
-      <span class="logo-text">Springfield Financial</span>
-        </a>
+        <div class="header-container">
+            <a href="index.html" class="logo" aria-label="Springfield Financial Home">
+                <div class="logo-icon"
+                    style="background-color:#003366; width:32px; height:32px; border-radius:8px; display:flex; align-items:center; justify-content:center;">
+                    <svg viewBox="0 0 100 100" width="20" height="20" fill="none" stroke="currentColor" stroke-width="6"
+                        stroke-linecap="round" stroke-linejoin="round" style="color:white;">
+                        <path d="M20 45 L50 20 L80 45 V80 H20 Z" />
+                        <path d="M35 80 V60 H45 V80" fill="white" stroke="none" />
+                        <path d="M55 80 V50 H65 V80" fill="white" stroke="none" />
+                    </svg>
+                </div>
+                <span class="logo-text">Springfield Financial</span>
+            </a>
             <!-- Mobile Menu Toggle -->
             <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Toggle menu">
                 <span id="menuIcon">☰</span>
@@ -46,16 +41,16 @@
                 <a href="admin.html" class="btn-login">Admin</a>
                 <button id="darkModeToggle" class="dark-mode-toggle" aria-label="Toggle dark mode">
                     <svg class="sun-icon" fill="currentColor" viewBox="0 0 20 20">
-                        <path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z"/>
+                        <path
+                            d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" />
                     </svg>
                     <svg class="moon-icon" fill="currentColor" viewBox="0 0 20 20">
-                        <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"/>
+                        <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z" />
                     </svg>
                 </button>
             </nav>
         </div>
     </header>
-
     <!-- Mobile Menu Overlay -->
     <div class="mobile-overlay" id="mobileOverlay"></div>
 
@@ -101,17 +96,20 @@
             <h2 class="section-title-light">Success Stories</h2>
             <div class="testimonials-grid">
                 <div class="testimonial-card">
-                    <p class="testimonial-text">"Springfield's working-capital loan was a game-changer for my farm in Kaduna. We harvested on time and increased revenue by 30%."</p>
+                    <p class="testimonial-text">"Springfield's working-capital loan was a game-changer for my farm in
+                        Kaduna. We harvested on time and increased revenue by 30%."</p>
                     <p class="testimonial-name">Aisha Bello</p>
                     <p class="testimonial-role">Agribusiness Owner, Nigeria</p>
                 </div>
                 <div class="testimonial-card">
-                    <p class="testimonial-text">"Thanks to their expansion loan, we opened our fourth retail outlet in Bogotá. Approval was so fast and transparent."</p>
+                    <p class="testimonial-text">"Thanks to their expansion loan, we opened our fourth retail outlet in
+                        Bogotá. Approval was so fast and transparent."</p>
                     <p class="testimonial-name">Carlos Ramirez</p>
                     <p class="testimonial-role">Retail Entrepreneur, Colombia</p>
                 </div>
                 <div class="testimonial-card">
-                    <p class="testimonial-text">"The equipment financing helped me upgrade our production line in Ho Chi Minh City. The low rates meant we still turned a profit."</p>
+                    <p class="testimonial-text">"The equipment financing helped me upgrade our production line in Ho Chi
+                        Minh City. The low rates meant we still turned a profit."</p>
                     <p class="testimonial-name">Nguyen Thi Minh</p>
                     <p class="testimonial-role">Manufacturing CEO, Vietnam</p>
                 </div>
@@ -128,37 +126,43 @@
                     <span class="love-icon">⚡</span>
                     <h3 class="love-title">Lightning-Fast Approval</h3>
                     <span class="love-stat">1-5 Days</span>
-                    <p class="love-description">Get your loan approved in as little as 1 business day. Our digital-first approach means no endless paperwork or waiting weeks for decisions.</p>
+                    <p class="love-description">Get your loan approved in as little as 1 business day. Our digital-first
+                        approach means no endless paperwork or waiting weeks for decisions.</p>
                 </div>
                 <div class="love-card">
                     <span class="love-icon">🛡️</span>
                     <h3 class="love-title">No Collateral Required</h3>
                     <span class="love-stat">$500K Max</span>
-                    <p class="love-description">Access up to $500,000 without putting your assets at risk. We evaluate your business potential, not just your property.</p>
+                    <p class="love-description">Access up to $500,000 without putting your assets at risk. We evaluate
+                        your business potential, not just your property.</p>
                 </div>
                 <div class="love-card">
                     <span class="love-icon">💰</span>
                     <h3 class="love-title">Competitive Rates</h3>
                     <span class="love-stat">From 12%</span>
-                    <p class="love-description">Industry-leading interest rates starting at 12% p.a. Save money while growing your business with fair, transparent pricing.</p>
+                    <p class="love-description">Industry-leading interest rates starting at 12% p.a. Save money while
+                        growing your business with fair, transparent pricing.</p>
                 </div>
                 <div class="love-card">
                     <span class="love-icon">🤝</span>
                     <h3 class="love-title">94% Approval Rate</h3>
                     <span class="love-stat">94.2%</span>
-                    <p class="love-description">We say yes when others say no. Our mission is to empower SMBs, and our approval rate proves our commitment.</p>
+                    <p class="love-description">We say yes when others say no. Our mission is to empower SMBs, and our
+                        approval rate proves our commitment.</p>
                 </div>
                 <div class="love-card">
                     <span class="love-icon">🌍</span>
                     <h3 class="love-title">Global Reach, Local Touch</h3>
                     <span class="love-stat">15+ Countries</span>
-                    <p class="love-description">Operating across emerging markets with deep local knowledge. Wall Street expertise meets community understanding.</p>
+                    <p class="love-description">Operating across emerging markets with deep local knowledge. Wall Street
+                        expertise meets community understanding.</p>
                 </div>
                 <div class="love-card">
                     <span class="love-icon">📊</span>
                     <h3 class="love-title">Flexible Repayment</h3>
                     <span class="love-stat">6-36 Months</span>
-                    <p class="love-description">Choose repayment terms that match your cash flow cycles. No rigid schedules that strain your business operations.</p>
+                    <p class="love-description">Choose repayment terms that match your cash flow cycles. No rigid
+                        schedules that strain your business operations.</p>
                 </div>
             </div>
         </div>
@@ -176,7 +180,10 @@
                         <span class="faq-icon">+</span>
                     </button>
                     <div class="faq-answer">
-                        <p>We finance a wide range of SMBs including retail, manufacturing, agriculture, services, technology, and more. As long as your business has a solid track record (typically 1+ years in operation) and demonstrates revenue growth, we're interested in supporting your expansion.</p>
+                        <p>We finance a wide range of SMBs including retail, manufacturing, agriculture, services,
+                            technology, and more. As long as your business has a solid track record (typically 1+ years
+                            in operation) and demonstrates revenue growth, we're interested in supporting your
+                            expansion.</p>
                     </div>
                 </div>
 
@@ -186,7 +193,9 @@
                         <span class="faq-icon">+</span>
                     </button>
                     <div class="faq-answer">
-                        <p>Our digital credit process allows us to make decisions in 1-5 business days. Once approved, funds are typically disbursed within 2-3 business days. In urgent cases, we can expedite the process for qualified applicants.</p>
+                        <p>Our digital credit process allows us to make decisions in 1-5 business days. Once approved,
+                            funds are typically disbursed within 2-3 business days. In urgent cases, we can expedite the
+                            process for qualified applicants.</p>
                     </div>
                 </div>
 
@@ -196,7 +205,10 @@
                         <span class="faq-icon">+</span>
                     </button>
                     <div class="faq-answer">
-                        <p>Yes! We offer unsecured business loans up to $500,000. We assess your business based on revenue, cash flow, business history, and growth potential rather than requiring property or assets as security. This allows you to access capital without risking your personal or business assets.</p>
+                        <p>Yes! We offer unsecured business loans up to $500,000. We assess your business based on
+                            revenue, cash flow, business history, and growth potential rather than requiring property or
+                            assets as security. This allows you to access capital without risking your personal or
+                            business assets.</p>
                     </div>
                 </div>
 
@@ -206,7 +218,10 @@
                         <span class="faq-icon">+</span>
                     </button>
                     <div class="faq-answer">
-                        <p>You'll need: (1) Government-issued ID, (2) Business registration documents, (3) Bank statements from the last 6 months, (4) Tax identification number (TIN), and (5) Basic financial information about your business. Our online application makes it easy to upload everything securely.</p>
+                        <p>You'll need: (1) Government-issued ID, (2) Business registration documents, (3) Bank
+                            statements from the last 6 months, (4) Tax identification number (TIN), and (5) Basic
+                            financial information about your business. Our online application makes it easy to upload
+                            everything securely.</p>
                     </div>
                 </div>
 
@@ -216,7 +231,9 @@
                         <span class="faq-icon">+</span>
                     </button>
                     <div class="faq-answer">
-                        <p>Absolutely! We encourage early repayment and offer flexible prepayment options with no penalties. If your business generates extra cash flow, you can pay down your loan faster and save on interest charges.</p>
+                        <p>Absolutely! We encourage early repayment and offer flexible prepayment options with no
+                            penalties. If your business generates extra cash flow, you can pay down your loan faster and
+                            save on interest charges.</p>
                     </div>
                 </div>
 
@@ -226,7 +243,10 @@
                         <span class="faq-icon">+</span>
                     </button>
                     <div class="faq-answer">
-                        <p>Our interest rates start from 12% per annum and vary based on factors like loan amount, term length, business history, and risk profile. We always provide transparent pricing with no hidden fees. Use our loan calculator on the Products page to estimate your monthly payments.</p>
+                        <p>Our interest rates start from 12% per annum and vary based on factors like loan amount, term
+                            length, business history, and risk profile. We always provide transparent pricing with no
+                            hidden fees. Use our loan calculator on the Products page to estimate your monthly payments.
+                        </p>
                     </div>
                 </div>
 
@@ -236,7 +256,9 @@
                         <span class="faq-icon">+</span>
                     </button>
                     <div class="faq-answer">
-                        <p>There are no upfront application fees. We believe in transparent pricing, so all costs are clearly disclosed before you accept any loan offer. Processing fees, if applicable, are included in your loan terms and never charged separately.</p>
+                        <p>There are no upfront application fees. We believe in transparent pricing, so all costs are
+                            clearly disclosed before you accept any loan offer. Processing fees, if applicable, are
+                            included in your loan terms and never charged separately.</p>
                     </div>
                 </div>
 
@@ -246,7 +268,10 @@
                         <span class="faq-icon">+</span>
                     </button>
                     <div class="faq-answer">
-                        <p>If we can't approve your application, we'll provide clear feedback on why and what you can do to strengthen your profile for future applications. We're committed to helping SMBs succeed, so we'll guide you on improving your financial position and may suggest reapplying after addressing specific issues.</p>
+                        <p>If we can't approve your application, we'll provide clear feedback on why and what you can do
+                            to strengthen your profile for future applications. We're committed to helping SMBs succeed,
+                            so we'll guide you on improving your financial position and may suggest reapplying after
+                            addressing specific issues.</p>
                     </div>
                 </div>
             </div>
@@ -263,9 +288,11 @@
                 <a href="apply.html">Apply for Loan</a>
                 <a href="contact.html">Contact</a>
             </div>
-            <p class="footer-copyright">© 2025 Springfield Financial Services Ltd. Ripon HG4 4DX, UK. All Rights Reserved.</p>
+            <p class="footer-copyright">© 2025 Springfield Financial Services Ltd. Ripon HG4 4DX, UK. All Rights
+                Reserved.</p>
         </div>
     </footer>
 </body>
-    <script src="script.js"></script>
+<script src="script.js"></script>
+
 </html>

@@ -1,6 +1,5 @@
 console.log("apply.js loaded");
 
-// MULTI-STEP FORM LOGIC WITH BACKEND
 document.addEventListener('DOMContentLoaded', () => {
     let currentStep = 1;
     const totalSteps = 5;
@@ -10,18 +9,20 @@ document.addEventListener('DOMContentLoaded', () => {
     const nextBtn = document.getElementById('nextBtn');
     const submitBtn = document.getElementById('submitBtn');
     const confirmationDiv = document.getElementById('confirmation');
+
     // Initialize submission date
     const submissionDateField = document.getElementById('submissionDate');
     if (submissionDateField) {
         const today = new Date().toLocaleDateString('en-GB');
         submissionDateField.value = `Submission Date: ${today}`;
     }
+
     // STEP NAVIGATION
     function showStep(step) {
-        // Hide all sections
-        document.querySelectorAll('.form-section').forEach(section => {
+        document.querySelectorAll('.form-section').forEach(section => { // Hide all sections
             section.classList.add('hidden');
         });
+
         // Show current section
         const currentSection = document.querySelector(`[data-section="${step}"]`);
         if (currentSection) {
@@ -311,26 +312,65 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // FORM SUBMISSION WITH BACKEND API
+    // ⭐ FORM SUBMISSION WITH BACKEND API ⭐
     if (form) {
         form.addEventListener('submit', async (e) => {
             e.preventDefault();
 
-            // Check honeypot and validate current step
+            // Check honeypot
             const honeypot = document.getElementById('website');
-            if (honeypot && honeypot.value) return; // Bot detected here
+            if (honeypot && honeypot.value) {
+                console.log('Bot detected');
+                return;
+            }
 
-            // Validate final step and all required fields
+            // Validate final step
             if (!validateStep(currentStep)) return;
+            
             // Show loading state
             submitBtn.disabled = true;
             submitBtn.textContent = 'Submitting...';
 
             try {
-                // Create FormData object for file upload
+                // Create FormData object
                 const formData = new FormData(form);
                 
-                //saves files from local storage to formData
+                // Submit to backend API
+                const response = await window.api.submitApplication(formData);
+
+                if (response.success) {
+                    // Hide form and show confirmation
+                    form.classList.add('hidden');
+                    confirmationDiv.classList.remove('hidden');
+                    
+                    // Display application ID
+                    document.getElementById('applicationId').textContent = 
+                        response.applicationId;
+                    
+                    // Clear form
+                    form.reset();
+                    
+                    // Reset step to 1
+                    currentStep = 1;
+                    showStep(currentStep);
+                    
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                    
+                    console.log('✅ Application submitted successfully!');
+                } else {
+                    throw new Error(response.message || 'Submission failed');
+                }
+
+            } catch (error) {
+                console.error('❌ Error submitting application:', error);
+                alert('There was an error submitting your application. Please try again.\n\nError: ' + error.message);
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Submit Application';
+            }
+        });
+    }
+    /*saves files from local storage to formData
                 const applicationData = Object.fromEntries(formData.entries());
                 applicationData.id = 'APP-' + Date.now();
                 applicationData.status = 'Pending Review';
@@ -355,35 +395,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 submitBtn.disabled = false;
                 submitBtn.textContent = 'Submit Application';
                 
-                window.scrollTo({ top: 0, behavior: 'smooth' });
+                window.scrollTo({ top: 0, behavior: 'smooth' });*/
 
-                /* Submit to backend API
-                const response = await api.submitApplication(formData);
-
-                if (response.success) {
-                    // Show confirmation
-                    form.classList.add('hidden');
-                    confirmationDiv.classList.remove('hidden');
-                    
-                    // Display application ID
-                    const appIdElement = document.getElementById('applicationId');
-                    if (appIdElement) {
-                        appIdElement.textContent = response.applicationId;
-                    }
-                    
-                    window.scrollTo({ top: 0, behavior: 'smooth' });
-                } else {
-                    throw new Error(response.message || 'Submission failed');
-                }*/
-
-            } catch (error) {
-                console.error('Error submitting application:', error);
-                alert('There was an error submitting your application. Please try again. Error: ' + error.message);
-                submitBtn.disabled = false;
-                submitBtn.textContent = 'Submit Application';
-            }
-        });
-    }
 
     // INPUT VALIDATION HELPERS
     // Email validation
